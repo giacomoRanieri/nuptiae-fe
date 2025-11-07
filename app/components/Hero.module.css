@@ -1,0 +1,22 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  background-image: url('https://via.placeholder.com/1500x800');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.hero h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}

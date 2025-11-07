@@ -1,0 +1,15 @@
+.ourStory {
+  padding: 2rem;
+  text-align: center;
+}
+
+.ourStory h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.ourStory p {
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
