@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NuptiaeBeWrapper } from "@/lib/NuptiaeBeWrapper";
+import { NuptiaeBeWrapper } from "@/app/components/NuptiaeBeWrapper";
 import "./globals.css";
 
 const geistSans = Geist({
