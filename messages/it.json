@@ -1,0 +1,16 @@
+{
+  "Header": {
+    "welcome": "Welcome",
+    "ourStory": "Chi siamo",
+    "details": "Come arrivare",
+    "uploadPhoto": "Carica foto"
+  },
+  "Hero": {
+    "fallbackNames": "Loredana & Giacomo"
+  },
+  "WeddingDetails": {
+    "saveTheDate": "Save<br>the<br>date",
+    "openMaps": "Apri su maps",
+    "saveCalendar": "Salva calendar"
+  }
+}

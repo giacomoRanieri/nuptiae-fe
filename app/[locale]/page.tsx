@@ -1,8 +1,9 @@
-import { client } from '../lib/sanity';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import OurStory from './components/OurStory';
-import WeddingDetails from './components/WeddingDetails';
+import { client } from "../../lib/sanity";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import OurStory from "../components/OurStory";
+import WeddingDetails from "../components/WeddingDetails";
+import styles from "./page.module.css";
 
 // Disable revalidation for now to ensure fresh data, or set revalidate time
 export const revalidate = 60;
@@ -21,11 +22,13 @@ export default async function Home() {
   const data = await getHomeData();
 
   if (!data) {
-     return (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
-            <h1>Waiting for content...</h1>
-        </div>
-     )
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "4rem" }}
+      >
+        <h1>Waiting for content...</h1>
+      </div>
+    );
   }
 
   const { hero, timeline, event } = data;
