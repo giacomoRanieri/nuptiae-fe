@@ -1,15 +1,84 @@
-.ourStory {
-  padding: 2rem;
-  text-align: center;
+.storySection {
+  max-width: 1240px;
+  margin: 0 auto;
+  margin-top: 115px;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
 }
 
-.ourStory h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.moment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
 }
 
-.ourStory p {
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0 auto 1rem;
+.left {
+    flex-direction: row;
+}
+
+.right {
+    flex-direction: row-reverse;
+}
+
+.imageCol {
+  /*flex: 1;*/
+  display: flex;
+  justify-content: center;
+}
+.right > .imageCol {
+    justify-content: flex-end;
+}
+.left > .imageCol {
+    justify-content: flex-start;
+}
+
+.imageWrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.momentImage {
+    display: block;
+    object-fit: cover;
+}
+
+.textCol {
+  /*flex: 1;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2rem;
+  max-width: 715px;
+  height: 483px;
+}
+
+.momentTitle {
+    font-family: var(--font-handwriting);
+    font-size: 3.75rem;
+    color: var(--color-blue);
+    margin-bottom: 1rem;
+}
+
+.momentDesc {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+}
+
+@media (max-width: 768px) {
+    .moment {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+    .right {
+        flex-direction: column;
+    }
+    .momentDesc {
+        margin: 0 auto;
+    }
 }

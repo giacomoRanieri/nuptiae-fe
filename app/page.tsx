@@ -1,63 +1,42 @@
-// import client from '../lib/contentful';
-// import { GET_HOMEPAGE_CONTENT } from '../lib/graphql-queries';
-import {
-  mockHeader,
-  mockHero,
-  mockOurStory,
-  mockWeddingDetails,
-  mockGallery,
-} from '../lib/mock-data';
+import { client } from '../lib/sanity';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import OurStory from './components/OurStory';
 import WeddingDetails from './components/WeddingDetails';
-import Gallery from './components/Gallery';
 
-// async function getHomepageContent() {
-//   const { data } = await client.query({
-//     query: GET_HOMEPAGE_CONTENT,
-//   });
+// Disable revalidation for now to ensure fresh data, or set revalidate time
+export const revalidate = 60;
 
-//   const {
-//     headerCollection,
-//     heroCollection,
-//     ourStoryCollection,
-//     weddingDetailsCollection,
-//     galleryCollection,
-//   } = data;
-
-//   const galleryData = galleryCollection.items[0];
-//   const gallery = {
-//     title: galleryData.title,
-//     images: galleryData.imagesCollection.items,
-//   };
-
-//   return {
-//     header: headerCollection.items[0],
-//     hero: heroCollection.items[0],
-//     ourStory: ourStoryCollection.items[0],
-//     weddingDetails: weddingDetailsCollection.items[0],
-//     gallery,
-//   };
-// }
+async function getHomeData() {
+  return client.fetch(`
+    *[_type == "home"][0] {
+      hero,
+      timeline,
+      event
+    }
+  `);
+}
 
 export default async function Home() {
-  // const { header, hero, ourStory, weddingDetails, gallery } = await getHomepageContent();
+  const data = await getHomeData();
 
-  const header = mockHeader;
-  const hero = mockHero;
-  const ourStory = mockOurStory;
-  const weddingDetails = mockWeddingDetails;
-  const gallery = mockGallery;
+  if (!data) {
+     return (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
+            <h1>Waiting for content...</h1>
+        </div>
+     )
+  }
+
+  const { hero, timeline, event } = data;
 
   return (
     <div>
-      <Header data={header} />
+      <Header />
       <main>
         <Hero data={hero} />
-        <OurStory data={ourStory} />
-        <WeddingDetails data={weddingDetails} />
-        <Gallery data={gallery} />
+        <OurStory data={timeline} />
+        <WeddingDetails data={event} />
       </main>
     </div>
   );

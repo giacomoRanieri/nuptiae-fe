@@ -1,13 +1,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-terracotta: #E67139;
+  --color-blue: #102E4A;
+  --color-light-blue: #5C95FF;
+  --color-orange: #FFBA7E;
+  --font-handwriting: 'Lucida Handwriting', 'Brush Script MT', cursive;
+  --font-sans: 'Poppins', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: 'Lucida Handwriting';
+  src: url('/LucidaHandwritingStdRg.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html,
