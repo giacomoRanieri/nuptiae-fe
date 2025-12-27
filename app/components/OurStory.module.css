@@ -43,6 +43,7 @@
 .momentImage {
     display: block;
     object-fit: cover;
+    filter: brightness(0.8);
 }
 
 .textCol {

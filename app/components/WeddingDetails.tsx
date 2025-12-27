@@ -18,28 +18,9 @@ export default function WeddingDetails({ data }: WeddingDetailsProps) {
     <section className={styles.detailsSection} id="details">
       {/* Date Card */}
       <div className={styles.dateCard}>
-        <div className={styles.dateContent}>
-          <div className={styles.ringsOverlay}>
-            <Image src="/WeddingRings.svg" alt="Rings" width={80} height={60} />
-          </div>
-          <h2 className={styles.saveTheDate}>
-            {t.rich("saveTheDate", {
-              br: () => <br />,
-            })}
-          </h2>
-          {data.date && (
-            <div className={styles.dateBadge}>
-              {new Date(data.date).toLocaleDateString("it-IT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </div>
-          )}
-        </div>
         {data.dateBackground && (
           <Image
-            src={urlFor(data.dateBackground).width(800).url()}
+            src={urlFor(data.dateBackground).width(1240).url()}
             alt="Couple background"
             fill
             className={styles.bgImage}
@@ -47,11 +28,25 @@ export default function WeddingDetails({ data }: WeddingDetailsProps) {
         )}
         {data.dateImage && (
           <Image
-            src={urlFor(data.dateImage).width(800).url()}
+            src={urlFor(data.dateImage).width(715).url()}
             alt="Couple image"
-            fill
-            className={styles.dateImage}
+            width={715}
+            height={599}
+            className={styles.fgImage}
           />
+        )}
+        <div className={styles.ringsOverlay}>
+          <Image src="/WeddingRings.svg" alt="Rings" width={135} height={120} />
+        </div>
+        <h2 className={styles.saveTheDate}>{t("saveTheDate")}</h2>
+        {data.date && (
+          <div className={styles.dateBadge}>
+            {new Date(data.date).toLocaleDateString("it-IT", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </div>
         )}
       </div>
 
