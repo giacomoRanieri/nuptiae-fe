@@ -1,15 +1,14 @@
 .storySection {
   max-width: 1240px;
-  margin: 0 auto;
-  margin-top: 115px;
+  margin: 3rem auto 0;
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 4rem;
 }
 
 .moment {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 4rem;
 }
@@ -52,12 +51,10 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: 2rem;
-  max-width: 715px;
-  height: 483px;
 }
 
 .momentTitle {
-    font-family: var(--font-handwriting);
+    font-family: var(--font-handwriting), serif;
     font-size: 3.75rem;
     color: var(--color-blue);
     margin-bottom: 1rem;
@@ -67,19 +64,28 @@
     font-size: 1.5rem;
     line-height: 1.5;
     color: var(--foreground);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans), sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 400px) {
     .moment {
         flex-direction: column;
-        gap: 2rem;
+        gap: 0.8rem;
         text-align: center;
+        padding: 1rem;
     }
     .right {
         flex-direction: column;
     }
     .momentDesc {
         margin: 0 auto;
+    }
+    .moment img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 5 / 6;
+    }
+    .textCol {
+        gap: 0;
     }
 }

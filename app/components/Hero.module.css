@@ -1,10 +1,9 @@
 .hero {
-  padding-top: 120px;
-  padding-bottom: 4rem;
-  max-width: 1240px;
-  margin: 0 auto;
-  display: flex;
-  gap: 2rem;
+    padding: 5% 0.5rem 4rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
 }
 
 .leftContainer {
@@ -17,28 +16,35 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 190px;
+    width: 100%;
+}
+
+.rightContainer > div {
+    text-align: center;
+    width: 100%;
+}
+.rightContainer > div > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .topContainer {
-  display: flex;
-  justify-content: center;
-  height: 138px;
+    display: flex;
+    justify-content: center;
 }
 
 .bottomContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 462px;
-  width: 1030px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4rem;
 }
 
 .logoAndNames {
-  display: flex;
-  align-items: center;
-  width: 1030px;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: start;
 }
 
 .dinos {
@@ -48,23 +54,24 @@
 }
 
 .namesBadge {
-  background-color: var(--color-blue);
-  color: white;
-  padding: 0 50px;
-  border-radius: 120px;
-  font-size: 4.688rem;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  align-content: center;
-  height: 100%;
+    background-color: var(--color-blue);
+    color: white;
+    padding: 0.8rem 3.5rem;
+    border-radius: 120px;
+    font-size: 4.6rem;
+    font-weight: 600;
+    font-family: var(--font-sans), sans-serif;
+    align-self: stretch;
+    align-content: center;
+    white-space: nowrap;
 }
 
 
 .contentGrid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
 .textColumn {
@@ -72,12 +79,11 @@
 }
 
 .mainTitle {
-    font-family: var(--font-handwriting);
+    font-family: var(--font-handwriting), serif;
     color: var(--color-terracotta);
-    font-size: 6.875rem;
+    font-size: 6.8rem;
     line-height: 1.4;
     font-weight: normal;
-    width: 656px;
 }
 
 .line1 { font-size: 3rem; }
@@ -99,22 +105,61 @@
     color: white;
     padding: 0.5rem;
     border-radius: 30px;
-    height: 138px;
     align-items: center;
+    height: 138px;
 }
 
 .blueIcon {
     background-color: var(--color-light-blue);
     padding: 1rem;
     border-radius: 30px;
-    height: 138px;
     align-items: center;
+    height: 138px;
 }
 
 .orangeIcon {
     background-color: var(--color-orange);
-    padding: 1rem;
+    padding: 2rem 1rem;
     border-radius: 30px;
-    height: 295px;
     align-items: center;
+    height: 300px;
+}
+
+@media screen and (max-width: 400px) {
+    .hero {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding-bottom: 1rem;
+    }
+    .bottomContainer {
+        gap: 1.5rem;
+    }
+    .mainTitle {
+        font-size: 2.5rem;
+    }
+    .namesBadge {
+        font-size: 1.8rem;
+        align-self: center;
+        padding: 0.5rem 1.2rem;
+    }
+    .dinos {
+        width: 60px;
+    }
+    .rightContainer{
+        flex-direction: row;
+        gap: 0.8rem;
+    }
+    .imageWrapper, .ringsIcon, .orangeIcon, .blueIcon {
+        border-radius: 10px;
+    }
+    .imageWrapper img {
+        width: 102px;
+        height: 160px;
+    }
+    .ringsIcon, .orangeIcon, .blueIcon {
+        height: 80px;
+    }
+    .orangeIcon {
+        padding: 0.8rem;
+    }
 }

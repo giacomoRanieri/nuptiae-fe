@@ -40,13 +40,13 @@ export default function WeddingDetails({ data }: WeddingDetailsProps) {
         </div>
         <h2 className={styles.saveTheDate}>{t("saveTheDate")}</h2>
         {data.date && (
-          <div className={styles.dateBadge}>
+          <p className={styles.dateBadge}>
             {new Date(data.date).toLocaleDateString("it-IT", {
               day: "numeric",
               month: "long",
               year: "numeric",
             })}
-          </div>
+          </p>
         )}
       </div>
 
@@ -64,7 +64,7 @@ export default function WeddingDetails({ data }: WeddingDetailsProps) {
           )}
         </div>
         <div className={styles.locationInfo}>
-          <div className={styles.locationBadge}>{data.locationName}</div>
+          <p className={styles.locationBadge}>{data.locationName}</p>
           <div className={styles.addressRow}>
             <MapPin size={45} />
             <span>{data.address}</span>

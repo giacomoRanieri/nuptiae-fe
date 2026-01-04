@@ -22,9 +22,9 @@ export default function Hero({ data }: HeroProps) {
             <div className={styles.dinos}>
               <Image src="/Dino.svg" alt="Dino" fill />
             </div>
-            <div className={styles.namesBadge}>
+            <h2 className={styles.namesBadge}>
               {coupleNames || t("fallbackNames")}
-            </div>
+            </h2>
           </div>
         </div>
 
@@ -36,7 +36,7 @@ export default function Hero({ data }: HeroProps) {
             {heroImage && (
               <div className={styles.imageWrapper}>
                 <Image
-                  src={urlFor(heroImage).width(295).url()}
+                  src={urlFor(heroImage).width(600).url()}
                   alt="Couple"
                   width={295}
                   height={456}
@@ -49,18 +49,18 @@ export default function Hero({ data }: HeroProps) {
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.ringsIcon}>
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <Image src="/RingsHeart.svg" alt="Rings" fill />
+          <div>
+            <Image src="/RingsHeart.svg" alt="Rings" fill/>
           </div>
         </div>
         <div className={styles.blueIcon}>
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <Image src="/Castle.svg" alt="Castle" fill />
+          <div>
+            <Image src="/Castle.svg" alt="Castle" fill/>
           </div>
         </div>
         <div className={styles.orangeIcon}>
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <Image src="/Glasses.svg" alt="Cheers" fill />
+          <div>
+            <Image src="/Glasses.svg" alt="Cheers" fill/>
           </div>
         </div>
       </div>

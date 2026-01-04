@@ -3,7 +3,7 @@
   justify-content: center;
   padding: 1rem;
   background-color: transparent;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   z-index: 10;
@@ -14,23 +14,28 @@
   align-items: center;
   gap: 2rem;
   background: white;
-  padding: 0.5rem 1.5rem;
+  padding: 0;
   border-radius: 50px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border: 1px solid #eee;
+  border: 1px solid var(--color-blue);
 }
 
 .links {
   display: flex;
-  gap: 1.5rem;
+  gap: 0rem;
 }
 
 .link {
   font-size: 0.8rem;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-blue);
-  font-weight: 500;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}
+.link:active, .link:hover {
+  background-color: var(--color-blue);
+  color: white;
 }
 
 .actions {
@@ -60,4 +65,11 @@
 .userIcon {
   color: var(--color-blue);
   cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+  .header {
+    bottom: 0;
+    top: auto;
+  }
 }

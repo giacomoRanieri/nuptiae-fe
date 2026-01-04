@@ -20,7 +20,7 @@ export default function OurStory({ data }: OurStoryProps) {
                     {moment.image && (
                         <div className={styles.imageWrapper}>
                              <Image
-                                src={urlFor(moment.image).width(400).url()}
+                                src={urlFor(moment.image).width(800).url()}
                                 alt={moment.title}
                                 width={400}
                                 height={483}
