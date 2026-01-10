@@ -67,7 +67,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
   .header {
     bottom: 0;
     top: auto;

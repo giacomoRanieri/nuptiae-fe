@@ -67,7 +67,7 @@
     font-family: var(--font-sans), sans-serif;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     .moment {
         flex-direction: column;
         gap: 0.8rem;

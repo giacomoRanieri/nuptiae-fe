@@ -1,9 +1,9 @@
 .detailsSection {
-  max-width: 1240px;
-  margin: 7rem auto 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    max-width: 1240px;
+    margin: 7rem auto 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .dateCard {
@@ -148,7 +148,7 @@
 }
 
 
-@media screen and (max-width:400px) {
+@media screen and (max-width: 600px) {
     .detailsSection {
         margin-top: 1rem;
         padding: 1rem;
