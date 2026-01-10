@@ -1,0 +1,91 @@
+.storySection {
+  max-width: 1240px;
+  margin: 3rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.moment {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.left {
+    flex-direction: row;
+}
+
+.right {
+    flex-direction: row-reverse;
+}
+
+.imageCol {
+  /*flex: 1;*/
+  display: flex;
+  justify-content: center;
+}
+.right > .imageCol {
+    justify-content: flex-end;
+}
+.left > .imageCol {
+    justify-content: flex-start;
+}
+
+.imageWrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.momentImage {
+    display: block;
+    object-fit: cover;
+    filter: brightness(0.8);
+}
+
+.textCol {
+  /*flex: 1;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.momentTitle {
+    font-family: var(--font-handwriting), serif;
+    font-size: 3.75rem;
+    color: var(--color-blue);
+    margin-bottom: 1rem;
+}
+
+.momentDesc {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--foreground);
+    font-family: var(--font-sans), sans-serif;
+}
+
+@media (max-width: 600px) {
+    .moment {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    .right {
+        flex-direction: column;
+    }
+    .momentDesc {
+        margin: 0 auto;
+    }
+    .moment img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 5 / 6;
+    }
+    .textCol {
+        gap: 0;
+    }
+}
