@@ -1,0 +1,21 @@
+{
+  "Header": {
+    "welcome": "Welcome",
+    "ourStory": "Chi siamo",
+    "details": "Come arrivare",
+    "uploadPhoto": "Carica foto"
+  },
+  "Hero": {
+    "fallbackNames": "Loredana & Giacomo"
+  },
+  "WeddingDetails": {
+    "saveTheDate": "Save the date",
+    "openMaps": "Apri su maps",
+    "saveCalendar": "Salva calendar"
+  },
+  "CookieBanner": {
+    "text": "Questo sito web utilizza cookie tecnici per garantire il corretto funzionamento delle procedure e migliorare l'esperienza di uso.",
+    "accept": "Accetta",
+    "policyLink": "Cookie Policy"
+  }
+}
