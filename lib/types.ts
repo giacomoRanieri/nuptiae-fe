@@ -17,8 +17,10 @@ export interface EventDetails {
   date: string;
   dateBackground: SanityImageSource;
   dateImage: SanityImageSource;
+  calendarName: string;
   locationName: string;
   address: string;
+  locationMaps: string;
   locationImage: SanityImageSource;
 }
 
