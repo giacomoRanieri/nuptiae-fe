@@ -1,3 +1,4 @@
+import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import { client } from "@/lib/sanity";
 import { PoliciesData } from "@/lib/types";
@@ -31,6 +32,7 @@ export default async function Policies() {
         </h2>
         <PortableText value={policiesData.privacyPolicy.content} />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 .container {
-    padding: 5% 0.5rem 4rem;
+    padding: 5% 0.5rem 0;
     max-width: 1240px;
     margin: 0 auto;
-    gap: 2rem;
+    margin-bottom: 1rem;
 }

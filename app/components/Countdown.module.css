@@ -1,0 +1,26 @@
+.countdown {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.number {
+  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 36px;
+  color: var(--color-blue);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--color-terracotta);
+}
+

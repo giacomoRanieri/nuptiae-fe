@@ -45,3 +45,13 @@ export interface PoliciesData {
   };
 }
 
+export interface FooterData {
+  contacts: {
+    email: string;
+  };
+  countdown: {
+    date: string;
+  };
+}
+
+

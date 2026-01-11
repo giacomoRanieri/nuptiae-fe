@@ -1,10 +1,11 @@
 :root {
-  --background: #ffffff;
+  --background: #FFFFFF;
   --foreground: #171717;
   --color-terracotta: #E67139;
   --color-blue: #102E4A;
   --color-light-blue: #5C95FF;
   --color-orange: #FFBA7E;
+  --color-orange-50percent: #FFBA7E80;
   --font-handwriting: 'Lucida Handwriting', 'Brush Script MT', cursive;
   --font-sans: 'Poppins', sans-serif;
 }
