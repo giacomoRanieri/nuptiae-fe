@@ -7,6 +7,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../app/i18n";
 import { CookieBanner } from "../components/CookieBanner";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <SpeedInsights />
         <NextIntlClientProvider messages={messages}>
           <NuptiaeBeWrapper>{children}</NuptiaeBeWrapper>
           <CookieBanner />
