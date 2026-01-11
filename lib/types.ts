@@ -1,4 +1,5 @@
 import { SanityImageSource } from "@sanity/image-url";
+import { TypedObject } from "@portabletext/types";
 
 export interface HeroData {
   coupleNames: string;
@@ -25,7 +26,22 @@ export interface EventDetails {
 }
 
 export interface HomePageData {
-    hero: HeroData;
-    timeline: TimelineItem[];
-    event: EventDetails;
+  hero: HeroData;
+  timeline: TimelineItem[];
+  event: EventDetails;
 }
+
+export interface PoliciesData {
+  head: {
+    title: string;
+  };
+  cookiePolicy: {
+    title: string;
+    content: TypedObject;
+  };
+  privacyPolicy: {
+    title: string;
+    content: TypedObject;
+  };
+}
+

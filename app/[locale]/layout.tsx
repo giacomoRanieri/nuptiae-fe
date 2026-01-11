@@ -5,8 +5,8 @@ import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "../../app/i18n";
-import { CookieBanner } from "../components/CookieBanner";
+import { routing } from "@/app/i18n";
+import { CookieBanner } from "@/app/components/CookieBanner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({

@@ -1,8 +1,8 @@
-import { client } from "../../lib/sanity";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import OurStory from "../components/OurStory";
-import WeddingDetails from "../components/WeddingDetails";
+import { client } from "@/lib/sanity";
+import Header from "@/app/components/Header";
+import Hero from "@/app/components/Hero";
+import OurStory from "@/app/components/OurStory";
+import WeddingDetails from "@/app/components/WeddingDetails";
 import styles from "./page.module.css";
 
 // Disable revalidation for now to ensure fresh data, or set revalidate time

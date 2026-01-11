@@ -14,13 +14,13 @@ export default function Header() {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.links}>
-          <Link href="#welcome" className={styles.link}>
+          <Link href="/#welcome" className={styles.link}>
             {t("welcome")}
           </Link>
-          <Link href="#story" className={styles.link}>
+          <Link href="/#story" className={styles.link}>
             {t("ourStory")}
           </Link>
-          <Link href="#details" className={styles.link}>
+          <Link href="/#details" className={styles.link}>
             {t("details")}
           </Link>
         </div>
