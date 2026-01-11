@@ -1,8 +1,9 @@
-import { client } from "../../lib/sanity";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import OurStory from "../components/OurStory";
-import WeddingDetails from "../components/WeddingDetails";
+import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header";
+import Hero from "@/app/components/Hero";
+import OurStory from "@/app/components/OurStory";
+import WeddingDetails from "@/app/components/WeddingDetails";
+import { client } from "@/lib/sanity";
 import styles from "./page.module.css";
 
 // Disable revalidation for now to ensure fresh data, or set revalidate time
@@ -36,11 +37,12 @@ export default async function Home() {
   return (
     <div>
       <Header />
-      <main>
+      <main className={styles.main}>
         <Hero data={hero} />
         <OurStory data={timeline} />
         <WeddingDetails data={event} />
       </main>
+      <Footer />
     </div>
   );
 }
