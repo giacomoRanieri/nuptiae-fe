@@ -1,0 +1,62 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    /* Glass-like backing */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field label {
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.field input,
+.field select {
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.submitButton {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary, #0070f3);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.success {
+    padding: 1rem;
+    background: rgba(0, 255, 0, 0.1);
+    color: #007000;
+    border-radius: 6px;
+}
+
+.error {
+    padding: 1rem;
+    background: rgba(255, 0, 0, 0.1);
+    color: #cc0000;
+    border-radius: 6px;
+}

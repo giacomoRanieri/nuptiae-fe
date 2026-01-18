@@ -25,5 +25,31 @@
     "days": "GIORNI",
     "hours": "ORE",
     "minutes": "MINUTI"
+  },
+  "InvitationForm":{
+    "confirmationStatus":"Stato di conferma",
+    "confirmed":"Confermato",
+    "notAttending":"Non parteciperà",
+    "pending":"In attesa",
+    "email":"Email",
+    "phoneNumber":"Numero di telefono",
+    "submit":"Invia",
+    "saving":"Salvataggio...",
+    "notAttendingMessage": "Ci dispiace che non sarai dei nostri!",
+    "name": "Nome",
+    "lastName": "Cognome",
+    "age": "Età",
+    "adult": "Adulto",
+    "child": "Bambino (< 12 anni)",
+    "infant": "Neonato (< 2 anni)",
+    "intolerances": "Intolleranze",
+    "celiac": "Celiaco",
+    "vegetarian": "Vegetariano",
+    "vegan": "Vegano",
+    "yes": "Sì",
+    "no": "No",
+    "addParticipant": "Aggiungi partecipante",
+    "removeParticipant": "Rimuovi",
+    "participantsListTitle": "Per chi è stata confermata la partecipazione?"
   }
 }
