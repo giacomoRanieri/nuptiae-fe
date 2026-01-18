@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NuptiaeBeWrapper } from "@/app/components/NuptiaeBeWrapper";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -45,7 +44,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SpeedInsights />
         <NextIntlClientProvider messages={messages}>
-          <NuptiaeBeWrapper>{children}</NuptiaeBeWrapper>
+          {children}
           <CookieBanner />
         </NextIntlClientProvider>
       </body>
