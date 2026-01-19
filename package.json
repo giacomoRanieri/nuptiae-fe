@@ -23,7 +23,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@types/node": "^22",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@portabletext/types": "^4.0.1",
