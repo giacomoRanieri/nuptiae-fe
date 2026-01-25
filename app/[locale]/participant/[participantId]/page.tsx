@@ -5,6 +5,7 @@ import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
 import { getClient } from "@/lib/api/graphql-client";
 import { InvitationForm } from "@/app/components/InvitationForm";
 import Header from "@/app/components/Header";
+import Image from "next/image";
 
 const GET_INVITATION = gql(`
   query GetInvitation($id: ID!) {
@@ -59,21 +60,36 @@ export default async function ParticipantDetail({
 
   return (
     <div className={styles.page}>
-      <div>
-        <div>Dinosauro Loredana & Giacomo</div>
-        <div>Vai al sito</div>
-      </div>
-      <h1>Conferma la tua partecipazione</h1>
-      <p>
-        Ti diamo il benvenuto sul nostro sito e siamo lieti di invitarti al
-        nostro matrimonio che si terrà venerdì 11 Settembre 2026 presso il
-        Castello di Oviglio (provincia di Alessandria). Compila questo form per
-        farci sapere se parteciperai e darci alcune informazioni per accoglierti
-        al meglio a questo giorno di festa.
-      </p>
-      <InvitationForm invitation={invitationData} />
+      <header className={styles.header}>
+        <div className={styles.logoAndNames}>
+          <div className={styles.dinos}>
+            <Image src="/Dino.svg" alt="Dino" fill />
+          </div>
+          <h2 className={styles.namesBadge}>
+            Giacomo & Loredana
+          </h2>
+        </div>
+        <button type="button" className={styles.button}>
+          Vai al sito
+        </button>
 
-      <TokenRefresher />
+      </header>
+      <div className={styles.bodyForm}>
+        <h1 className={styles.title}>Conferma la tua partecipazione</h1>
+        <p className={styles.headline}>
+          Ti diamo il benvenuto sul nostro sito e siamo lieti di invitarti al
+          nostro matrimonio che si terrà
+          <span className={styles.bold}> venerdì 11 Settembre 2026</span> presso il
+          <span className={styles.bold}> Castello di Oviglio</span>
+          (provincia di Alessandria). Compila questo form per
+          farci sapere se parteciperai e darci alcune informazioni per accoglierti
+          al meglio a questo giorno di festa.
+        </p>
+        <InvitationForm invitation={invitationData} />
+
+        <TokenRefresher />
+
+      </div>
     </div>
   );
 }
