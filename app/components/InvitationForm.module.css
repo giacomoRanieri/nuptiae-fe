@@ -1,14 +1,6 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 600px;
     margin: 0 auto;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    /* Glass-like backing */
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
 }
 
 .field {
@@ -59,4 +51,100 @@
     background: rgba(255, 0, 0, 0.1);
     color: #cc0000;
     border-radius: 6px;
+}
+
+.blockLine {
+    border-bottom: 2px solid #E67139;
+    border-top: 2px solid #E67139;
+}
+
+.labelBold {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.radioBtn {
+    border: 1px solid #102E4A;
+    padding: 1rem;
+    width:30%;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    gap: 1rem;
+    display: flex;
+}
+.radioBtn input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 2rem;
+    height: 2rem;
+    aspect-ratio: 1/1;
+    border: 1px solid currentColor;
+    border-radius: 3rem;
+    background-color: #FFFFFF;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+.radioBtn input[type="radio"]::before {
+    content: "";
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 3rem;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1.2rem 1.2rem #102E4A;
+}
+
+.radioBtn input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+.radioBtn label {
+    width: 100%;
+}
+
+.radioBtn:has(input[type="radio"]:checked) {
+    background-color: rgba(92, 149, 255, 0.3);
+}
+.responseImg img {
+    border-radius: 100px;
+    object-fit: cover;
+}
+
+.titleOrange {
+    color: #E67139;
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+.responseBlock {
+    padding: 2rem;
+    display: flex;
+    gap: 1.4rem;
+}
+.responseBlock h2 {
+    width: 60%;
+}
+.responseBlock p, .descriptionP {
+    font-size: 1.2rem;
+    width: 90%;
+}
+.contentForm {
+    padding: 0 2rem;
+}
+.contentForm p {
+    width: 60%;
+    margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .radioBtn {
+        width: 100%;
+    }
 }

@@ -27,7 +27,7 @@
     "minutes": "MINUTI"
   },
   "InvitationForm":{
-    "confirmationStatus":"Stato di conferma",
+    "confirmationStatus":"Ci sarai al matrimonio?",
     "confirmed":"Confermato",
     "notAttending":"Non parteciperà",
     "pending":"In attesa",
@@ -46,7 +46,7 @@
     "celiac": "Celiaco",
     "vegetarian": "Vegetariano",
     "vegan": "Vegano",
-    "yes": "Sì",
+    "yes": "Si",
     "no": "No",
     "addParticipant": "Aggiungi partecipante",
     "removeParticipant": "Rimuovi",

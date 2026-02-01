@@ -10,6 +10,7 @@ import {
 } from "@/lib/graphql/graphql";
 import styles from "./InvitationForm.module.css";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface Props {
   invitation: InvitationDto;
@@ -74,97 +75,105 @@ export function InvitationForm({ invitation }: Props) {
         </div>
       )}
 
-      <div>
-        <label>{t("confirmationStatus")}</label>
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <input
-              type="radio"
-              id="confirmed"
-              name="status"
-              value={ConfirmationStatus.CONFIRMED}
-              checked={status === ConfirmationStatus.CONFIRMED}
-              onChange={() => setStatus(ConfirmationStatus.CONFIRMED)}
-            />
-            <label htmlFor="confirmed" style={{ fontWeight: "normal" }}>
-              {t("confirmed")}
-            </label>
-          </div>
-          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <input
-              type="radio"
-              id="notAttending"
-              name="status"
-              value={ConfirmationStatus.NOT_ATTENDING}
-              checked={status === ConfirmationStatus.NOT_ATTENDING}
-              onChange={() => setStatus(ConfirmationStatus.NOT_ATTENDING)}
-            />
-            <label htmlFor="notAttending" style={{ fontWeight: "normal" }}>
-              {t("notAttending")}
-            </label>
-          </div>
+      <div className={styles.blockLine} style={{padding: "2rem 1rem"}}>
+        <label className={styles.labelBold}>{t("confirmationStatus")}</label>
+        <div className={styles.radioBtn}>
+          <input
+            type="radio"
+            id="confirmed"
+            name="status"
+            value={ConfirmationStatus.CONFIRMED}
+            checked={status === ConfirmationStatus.CONFIRMED}
+            onChange={() => setStatus(ConfirmationStatus.CONFIRMED)}
+          />
+          <label htmlFor="confirmed" style={{ fontWeight: "normal" }}>
+            {t("yes")}
+          </label>
+        </div>
+        <div className={styles.radioBtn}>
+          <input
+            type="radio"
+            id="notAttending"
+            name="status"
+            value={ConfirmationStatus.NOT_ATTENDING}
+            checked={status === ConfirmationStatus.NOT_ATTENDING}
+            onChange={() => setStatus(ConfirmationStatus.NOT_ATTENDING)}
+          />
+          <label htmlFor="notAttending" style={{ fontWeight: "normal" }}>
+            {t("no")}
+          </label>
         </div>
       </div>
 
       {status === ConfirmationStatus.CONFIRMED && (
         <div>
-          <div>immagine di felicità</div>
-          <h2>
-            Siamo felici che hai confermato la partecipazione al nostro
-            matrimonio!
-          </h2>
-          <p>
-            Ti chiediamo ancora alcune informazioni per rendere questo giorno
-            speciale e accogliente per tutte e tutti!
-          </p>
-          <div>
-            <div>Contatti di riferimento</div>
-            <div className={styles.field}>
-              <label htmlFor="email">{t("email")}</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                defaultValue={invitation.email || ""}
-                placeholder="your@email.com"
-                required
-              />
+          <div className={styles.responseBlock}>
+            <div className={styles.responseImg}>
+              <Image src="/foto-felice.jpg" alt="Immagine felice" width={156} height={156} />
             </div>
-
-            <div className={styles.field}>
-              <label htmlFor="phoneNumber">{t("phoneNumber")}</label>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                defaultValue={invitation.phoneNumber || ""}
-                placeholder="+39 123 456 7890"
-                required
-              />
-            </div>
+            <h2 className={styles.titleOrange}>
+              Siamo felici che hai confermato la partecipazione al nostro
+              matrimonio!
+            </h2>
           </div>
+          <div className={styles.contentForm}>
+            <p>
+              Ti chiediamo ancora alcune informazioni per rendere questo giorno
+              speciale e accogliente per tutte e tutti!
+            </p>
+            <div>
+              <h3>Contatti di riferimento</h3>
+              <div className={styles.field}>
+                <label htmlFor="email">{t("email")}</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    defaultValue={invitation.email || ""}
+                    placeholder="your@email.com"
+                    required
+                />
+              </div>
+              <div className={styles.field}>
+                <label htmlFor="phoneNumber">{t("phoneNumber")}</label>
+                <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    defaultValue={invitation.phoneNumber || ""}
+                    placeholder="+39 123 456 7890"
+                    required
+                />
+              </div>
+            </div>
           <div>
             <div>
               Ti/vi interessa supporto nel trovare un alloggio per la notte
               dell’11 settembre nelle vicinanze della location? (è a circa 1 ora
               di auto da Torino)
             </div>
-            <input
-              type="radio"
-              id="interestedInAccommodation"
-              name="interestedInAccommodation"
-              value="true"
-              defaultChecked={invitation.isInterestedInAccommodation}
-            />
-            <label htmlFor="interestedInAccommodation">Sì</label>
-            <input
-              type="radio"
-              id="notInterestedInAccommodation"
-              name="interestedInAccommodation"
-              value="false"
-              defaultChecked={!invitation.isInterestedInAccommodation}
-            />
-            <label htmlFor="notInterestedInAccommodation">No</label>
+            <div className={styles.radioBtn}>
+              <input
+                type="radio"
+                id="interestedInAccommodation"
+                name="interestedInAccommodation"
+                value="true"
+                defaultChecked={invitation.isInterestedInAccommodation}
+              />
+              <label htmlFor="interestedInAccommodation">
+                {t("yes")}</label>
+            </div>
+            <div className={styles.radioBtn}>
+              <input
+                type="radio"
+                id="notInterestedInAccommodation"
+                name="interestedInAccommodation"
+                value="false"
+                defaultChecked={!invitation.isInterestedInAccommodation}
+              />
+              <label htmlFor="notInterestedInAccommodation">
+                {t("no")}</label>
+            </div>
           </div>
           <div>
             <h3 style={{ marginTop: "2rem" }}>{t("participantsListTitle")}</h3>
@@ -318,20 +327,25 @@ export function InvitationForm({ invitation }: Props) {
             </div>
           </div>
         </div>
+        </div>
       )}
 
       {status === ConfirmationStatus.NOT_ATTENDING && (
-        <div>
-          <div>immagine di dispiacere</div>
-          <h2>
-            Ci dispiace che non riuscirai a partecipare. Ci mancherai, ma
-            brinderemo sicuramente anche per te!
-          </h2>
-          <p>
-            Se cambi idea puoi inquadrare di nuovo il qr code dell’invito e
-            cambiare la tua risposta. Ti preghiamo di farlo entro il 15 Giugno
-            2026
-          </p>
+        <div className={styles.responseBlock}>
+          <div className={styles.responseImg}>
+            <Image src="/foto-triste.jpg" alt="Immagine triste" width={156} height={156} />
+          </div>
+          <div>
+            <h2 className={styles.titleOrange}>
+              Ci dispiace che non riuscirai a partecipare. Ci mancherai, ma
+              brinderemo sicuramente anche per te!
+            </h2>
+            <p>
+              Se cambi idea puoi inquadrare di nuovo il qr code dell’invito e
+              cambiare la tua risposta. Ti preghiamo di farlo entro il 15 Giugno
+              2026
+            </p>
+          </div>
         </div>
       )}
 
