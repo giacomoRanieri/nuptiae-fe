@@ -17,15 +17,15 @@ export type Scalars = {
 };
 
 export enum Age {
-  ADULT = 'adult',
-  CHILD = 'child',
-  INFANT = 'infant'
+  ADULT = 'ADULT',
+  CHILD = 'CHILD',
+  INFANT = 'INFANT'
 }
 
 export enum ConfirmationStatus {
-  CONFIRMED = 'confirmed',
-  NOT_ATTENDING = 'not_attending',
-  PENDING = 'pending'
+  CONFIRMED = 'CONFIRMED',
+  NOT_ATTENDING = 'NOT_ATTENDING',
+  PENDING = 'PENDING'
 }
 
 export type CreateInvitationInput = {
