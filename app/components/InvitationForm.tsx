@@ -111,47 +111,51 @@ export function InvitationForm({ invitation }: Props) {
             <div className={styles.responseImg}>
               <Image src="/foto-felice.jpg" alt="Immagine felice" width={156} height={156} />
             </div>
-            <h2 className={styles.titleOrange}>
-              Siamo felici che hai confermato la partecipazione al nostro
-              matrimonio!
-            </h2>
+            <div>
+              <h2 className={styles.titleOrange}>
+                Siamo felici che hai confermato la partecipazione al nostro
+                matrimonio!
+              </h2>
+              <p>
+                Ti chiediamo ancora alcune informazioni per rendere questo giorno
+                speciale e accogliente per tutte e tutti!
+              </p>
+            </div>
           </div>
           <div className={styles.contentForm}>
-            <p>
-              Ti chiediamo ancora alcune informazioni per rendere questo giorno
-              speciale e accogliente per tutte e tutti!
-            </p>
-            <div>
               <h3>Contatti di riferimento</h3>
-              <div className={styles.field}>
-                <label htmlFor="email">{t("email")}</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    defaultValue={invitation.email || ""}
-                    placeholder="your@email.com"
-                    required
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="phoneNumber">{t("phoneNumber")}</label>
-                <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    defaultValue={invitation.phoneNumber || ""}
-                    placeholder="+39 123 456 7890"
-                    required
-                />
-              </div>
+              <div className={styles.wrapper}>
+                <div className={styles.field}>
+                  <label htmlFor="email">{t("email")}</label>
+                  <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      defaultValue={invitation.email || ""}
+                      placeholder="your@email.com"
+                      required
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="phoneNumber">{t("phoneNumber")}</label>
+                  <input
+                      type="tel"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      defaultValue={invitation.phoneNumber || ""}
+                      placeholder="+39 123 456 7890"
+                      required
+                  />
+                </div>
             </div>
-          <div>
+            <div className={styles.my3}>
+              <h4>
+                Ti/vi interessa supporto nel trovare un alloggio per la notte
+                dell’11 settembre nelle vicinanze della location?
+              </h4>
+              <p>(è a circa 1 ora di auto da Torino)</p>
+            </div>
             <div>
-              Ti/vi interessa supporto nel trovare un alloggio per la notte
-              dell’11 settembre nelle vicinanze della location? (è a circa 1 ora
-              di auto da Torino)
-            </div>
             <div className={styles.radioBtn}>
               <input
                 type="radio"
@@ -175,20 +179,15 @@ export function InvitationForm({ invitation }: Props) {
                 {t("no")}</label>
             </div>
           </div>
-          <div>
+          <div className={styles.partecipantBlock}>
             <h3 style={{ marginTop: "2rem" }}>{t("participantsListTitle")}</h3>
-
             <div
               style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
             >
               {participants.map((participant, index) => (
                 <div
                   key={index}
-                  style={{
-                    border: "1px solid rgba(255,255,255,0.2)",
-                    padding: "1rem",
-                    borderRadius: "8px",
-                  }}
+                  className={styles.wrapperMain}
                 >
                   <div
                     style={{
@@ -224,89 +223,91 @@ export function InvitationForm({ invitation }: Props) {
                       value={participant._id}
                     />
                   )}
+                  <div className={styles.wrapper}>
+                    <div className={styles.field}>
+                      <label>{t("name")}</label>
+                      <input
+                          type="text"
+                          name={`participants[${index}].name`}
+                          defaultValue={participant.name}
+                          required
+                          className="w-full"
+                          style={{ width: "100%" }}
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <label>{t("lastName")}</label>
+                      <input
+                          type="text"
+                          name={`participants[${index}].lastName`}
+                          defaultValue={participant.lastName}
+                          style={{ width: "100%" }}
+                      />
+                    </div>
 
-                  <div className={styles.field}>
-                    <label>{t("name")}</label>
-                    <input
-                      type="text"
-                      name={`participants[${index}].name`}
-                      defaultValue={participant.name}
-                      required
-                      className="w-full"
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div className={styles.field}>
-                    <label>{t("lastName")}</label>
-                    <input
-                      type="text"
-                      name={`participants[${index}].lastName`}
-                      defaultValue={participant.lastName}
-                      style={{ width: "100%" }}
-                    />
-                  </div>
+                    <div className={styles.field}>
+                      <label>{t("age")}</label>
+                      <select
+                          name={`participants[${index}].age`}
+                          defaultValue={participant.age || Age.ADULT}
+                      >
+                        <option value={Age.ADULT}>{t("adult")}</option>
+                        <option value={Age.CHILD}>{t("child")}</option>
+                        <option value={Age.INFANT}>{t("infant")}</option>
+                      </select>
+                    </div>
 
-                  <div className={styles.field}>
-                    <label>{t("age")}</label>
-                    <select
-                      name={`participants[${index}].age`}
-                      defaultValue={participant.age || Age.ADULT}
+                    <div className={styles.field}>
+                      <label>{t("intolerances")}</label>
+                      <textarea
+                          name={`participants[${index}].intolerances`}
+                          defaultValue={participant.intolerances || ""}
+                          style={{
+                            minHeight: "60px",
+                            borderRadius: "6px",
+                            padding: "0.5rem",
+                            border: "1px solid rgba(0,0,0,0.1)",
+                            width: "100%",
+                          }}
+                      />
+                    </div>
+
+                    <div
+                        style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
                     >
-                      <option value={Age.ADULT}>{t("adult")}</option>
-                      <option value={Age.CHILD}>{t("child")}</option>
-                      <option value={Age.INFANT}>{t("infant")}</option>
-                    </select>
+                      <div className={styles.field} style={{ flex: 1 }}>
+                        <label>
+                          <input
+                              type="checkbox"
+                              name={`participants[${index}].celiac`}
+                              checked={participant.celiac}
+                          />
+                          {t("celiac")}
+                        </label>
+                      </div>
+                      <div className={styles.field} style={{ flex: 1 }}>
+                        <label>
+                          <input
+                              type="checkbox"
+                              name={`participants[${index}].vegetarian`}
+                              checked={participant.vegetarian}
+                          />
+                          {t("vegetarian")}
+                        </label>
+                      </div>
+                      <div className={styles.field} style={{ flex: 1 }}>
+                        <label>
+                          <input
+                              type="checkbox"
+                              name={`participants[${index}].vegan`}
+                              checked={participant.vegan}
+                          />
+                          {t("vegan")}
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className={styles.field}>
-                    <label>{t("intolerances")}</label>
-                    <textarea
-                      name={`participants[${index}].intolerances`}
-                      defaultValue={participant.intolerances || ""}
-                      style={{
-                        minHeight: "60px",
-                        borderRadius: "6px",
-                        padding: "0.5rem",
-                        border: "1px solid rgba(0,0,0,0.1)",
-                        width: "100%",
-                      }}
-                    />
-                  </div>
-
-                  <div
-                    style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
-                  >
-                    <div className={styles.field} style={{ flex: 1 }}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          name={`participants[${index}].celiac`}
-                          checked={participant.celiac}
-                        />
-                        {t("celiac")}
-                      </label>
-                    </div>
-                    <div className={styles.field} style={{ flex: 1 }}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          name={`participants[${index}].vegetarian`}
-                          checked={participant.vegetarian}
-                        />
-                        {t("vegetarian")}
-                      </label>
-                    </div>
-                    <div className={styles.field} style={{ flex: 1 }}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          name={`participants[${index}].vegan`}
-                          checked={participant.vegan}
-                        />
-                        {t("vegan")}
-                      </label>
-                    </div>
-                  </div>
                 </div>
               ))}
             </div>
