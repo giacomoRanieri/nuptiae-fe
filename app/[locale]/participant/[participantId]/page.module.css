@@ -1,6 +1,7 @@
 h1.title {
     font-family: var(--font-handwriting);
     font-weight: normal;
+    padding-left: 1rem;
 }
 .header {
     display: flex;
@@ -61,4 +62,24 @@ button.button:hover {
 }
 .bold {
     font-weight: bold;
+}
+@media screen and (max-width: 600px) {
+    .headline {
+        width: 100%;
+        padding-left: 1rem;
+    }
+    .header {
+        padding: 1rem 0.5rem 0;
+    }
+    .namesBadge {
+        font-size: 1rem;
+        align-self: center;
+        padding: 0.5rem 0.8rem;
+    }
+    .dinos {
+        width: 40px;
+    }
+    .button {
+        padding: 0.6rem 2rem;
+    }
 }
