@@ -45,15 +45,17 @@ export const Countdown = ({ targetDate }: CountdownProps) => {
   return (
     <div className={styles.countdown}>
       <div className={styles.item}>
-        <span className={styles.number}>{timeLeft.days}</span>
+        <span className={styles.number}>{timeLeft.days.toLocaleString()}</span>
         <span className={styles.label}>{t("days")}</span>
       </div>
       <div className={styles.item}>
-        <span className={styles.number}>{timeLeft.hours}</span>
+        <span className={styles.number}>{timeLeft.hours.toLocaleString()}</span>
         <span className={styles.label}>{t("hours")}</span>
       </div>
       <div className={styles.item}>
-        <span className={styles.number}>{timeLeft.minutes}</span>
+        <span className={styles.number}>
+          {timeLeft.minutes.toLocaleString()}
+        </span>
         <span className={styles.label}>{t("minutes")}</span>
       </div>
     </div>

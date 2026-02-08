@@ -55,3 +55,25 @@ export interface FooterData {
 }
 
 
+export interface ParticipantPageData {
+  header: {
+    coupleNames: string;
+    goToSite: string;
+  };
+  form: {
+    title: string;
+    headline: TypedObject | TypedObject[];
+    willNotAttend: {
+      title: string;
+      description: TypedObject | TypedObject[];
+      image: SanityImageSource;
+    };
+    willAttend: {
+      title: string;
+      description: TypedObject | TypedObject[];
+      image: SanityImageSource;
+      needAccommodationTitle: string;
+      needAccommodationDescription: TypedObject | TypedObject[];
+    };
+  };
+}

@@ -4,8 +4,11 @@ import { TokenRefresher } from "@/app/components/TokenRefresher";
 import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
 import { getClient } from "@/lib/api/graphql-client";
 import { InvitationForm } from "@/app/components/InvitationForm";
-import Header from "@/app/components/Header";
 import Image from "next/image";
+import Footer from "@/app/components/Footer";
+import { client } from "@/lib/sanity";
+import { ParticipantPageData } from "@/lib/types";
+import { PortableText } from "next-sanity";
 
 const GET_INVITATION = gql(`
   query GetInvitation($id: ID!) {
@@ -22,12 +25,27 @@ const GET_INVITATION = gql(`
   }
 `);
 
+async function getParticipantPageData() {
+  return client.fetch<ParticipantPageData>(`
+    *[_type == "participant"][0] {
+      header,
+      form {
+        title,
+        headline,
+        willNotAttend,
+        willAttend
+      }
+    }
+  `);
+}
+
 export default async function ParticipantDetail({
   params,
 }: {
   params: Promise<{ participantId: string }>;
 }) {
   const { participantId } = await params;
+  const pageData = await getParticipantPageData();
 
   // Note: Middleware now intercepts when the 'at' cookie is missing and sets it.
   // We can assume if we are here and authenticated, cookies() has the token.
@@ -65,31 +83,25 @@ export default async function ParticipantDetail({
           <div className={styles.dinos}>
             <Image src="/Dino.svg" alt="Dino" fill />
           </div>
-          <h2 className={styles.namesBadge}>
-            Giacomo & Loredana
-          </h2>
+          <h2 className={styles.namesBadge}>{pageData?.header.coupleNames}</h2>
         </div>
         <button type="button" className={styles.button}>
-          Vai al sito
+          {pageData?.header.goToSite}
         </button>
-
       </header>
       <div className={styles.bodyForm}>
-        <h1 className={styles.title}>Conferma la tua partecipazione</h1>
-        <p className={styles.headline}>
-          Ti diamo il benvenuto sul nostro sito e siamo lieti di invitarti al
-          nostro matrimonio che si terrà
-          <span className={styles.bold}> venerdì 11 Settembre 2026</span> presso il
-          <span className={styles.bold}> Castello di Oviglio</span>
-          (provincia di Alessandria). Compila questo form per
-          farci sapere se parteciperai e darci alcune informazioni per accoglierti
-          al meglio a questo giorno di festa.
-        </p>
-        <InvitationForm invitation={invitationData} />
-
+        <h1 className={styles.title}>{pageData?.form.title}</h1>
+        <div className={styles.headline}>
+          {pageData?.form.headline ? (
+            <PortableText value={pageData.form.headline} />
+          ) : (
+            <></>
+          )}
+        </div>
+        <InvitationForm invitation={invitationData} pageData={pageData?.form} />
         <TokenRefresher />
-
       </div>
+      <Footer />
     </div>
   );
 }
