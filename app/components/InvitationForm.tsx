@@ -180,7 +180,7 @@ export function InvitationForm({ invitation }: Props) {
             </div>
           </div>
           <div className={styles.partecipantBlock}>
-            <h3 style={{ marginTop: "2rem" }}>{t("participantsListTitle")}</h3>
+            <h3 style={{ marginTop: "2rem", marginBottom: "1rem" }}>{t("participantsListTitle")}</h3>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
             >
@@ -189,29 +189,15 @@ export function InvitationForm({ invitation }: Props) {
                   key={index}
                   className={styles.wrapperMain}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "1rem",
-                    }}
+                  <div className={styles.numBtnGroup}
                   >
-                    <h4>#{index + 1}</h4>
+                    <h4>{index + 1}</h4>
                     {index > 0 && (
                       <button
                         type="button"
                         onClick={() => removeParticipant(index)}
-                        style={{
-                          padding: "0.25rem 0.5rem",
-                          background: "var(--error, #cc0000)",
-                          fontSize: "0.8rem",
-                          color: "red",
-                          border: "1px solid red",
-                          borderRadius: "4px",
-                        }}
                       >
-                        {t("removeParticipant")}
+                        <Image src="/faTrash.svg" alt="Rimuovi partecipante" width={26} height={26} />
                       </button>
                     )}
                   </div>
@@ -260,23 +246,15 @@ export function InvitationForm({ invitation }: Props) {
                     <div className={styles.field}>
                       <label>{t("intolerances")}</label>
                       <textarea
+                          rows={3}
                           name={`participants[${index}].intolerances`}
                           defaultValue={participant.intolerances || ""}
-                          style={{
-                            minHeight: "60px",
-                            borderRadius: "6px",
-                            padding: "0.5rem",
-                            border: "1px solid rgba(0,0,0,0.1)",
-                            width: "100%",
-                          }}
                       />
                     </div>
 
-                    <div
-                        style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
-                    >
-                      <div className={styles.field} style={{ flex: 1 }}>
-                        <label>
+                    <div className={styles.checkGroup}>
+                      <div className={styles.field} style={{ flex: 1}}>
+                        <label className={styles.checkboxLabel}>
                           <input
                               type="checkbox"
                               name={`participants[${index}].celiac`}
@@ -286,7 +264,7 @@ export function InvitationForm({ invitation }: Props) {
                         </label>
                       </div>
                       <div className={styles.field} style={{ flex: 1 }}>
-                        <label>
+                        <label className={styles.checkboxLabel}>
                           <input
                               type="checkbox"
                               name={`participants[${index}].vegetarian`}
@@ -296,7 +274,7 @@ export function InvitationForm({ invitation }: Props) {
                         </label>
                       </div>
                       <div className={styles.field} style={{ flex: 1 }}>
-                        <label>
+                        <label className={styles.checkboxLabel}>
                           <input
                               type="checkbox"
                               name={`participants[${index}].vegan`}
@@ -312,18 +290,21 @@ export function InvitationForm({ invitation }: Props) {
               ))}
             </div>
 
-            <div style={{ marginTop: "1rem" }}>
+            <div style={{ marginTop: "1rem", display: "flex", justifyContent: "space-between" }}>
               <button
                 type="button"
                 onClick={addParticipant}
-                style={{
-                  background: "var(--secondary, #333)",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
+                className={styles.addPartecipantBtn}
               >
-                {t("addParticipant")}
+                + {t("addParticipant")}
+              </button>
+
+              <button
+                  type="submit"
+                  disabled={isPending}
+                  className={styles.submitButton}
+              >
+                {isPending ? t("saving") : t("submit")}
               </button>
             </div>
           </div>
@@ -349,15 +330,6 @@ export function InvitationForm({ invitation }: Props) {
           </div>
         </div>
       )}
-
-      <button
-        type="submit"
-        disabled={isPending}
-        className={styles.submitButton}
-        style={{ marginTop: "2rem" }}
-      >
-        {isPending ? t("saving") : t("submit")}
-      </button>
     </form>
   );
 }
