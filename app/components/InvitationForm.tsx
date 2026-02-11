@@ -264,6 +264,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                   id="interestedInAccommodation"
                   name="interestedInAccommodation"
                   value="true"
+                  required
                   defaultChecked={invitation.isInterestedInAccommodation}
                 />
                 <label htmlFor="interestedInAccommodation">{t("yes")}</label>
@@ -274,6 +275,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                   id="notInterestedInAccommodation"
                   name="interestedInAccommodation"
                   value="false"
+                  required
                   defaultChecked={!invitation.isInterestedInAccommodation}
                 />
                 <label htmlFor="notInterestedInAccommodation">{t("no")}</label>
