@@ -31,8 +31,12 @@ export default async function middleware(request: NextRequest) {
         });
 
         if (loginResponse.ok) {
-          const cookie = loginResponse.headers.get('set-cookie');
+          let cookie = loginResponse.headers.get('set-cookie');
           if (cookie) {
+            if (process.env.NODE_ENV === 'development') {
+              cookie = cookie.split(';')[0]
+            }
+
             // Create response redirecting to same URL without token
             const nextUrl = request.nextUrl.clone();
             //nextUrl.searchParams.delete('token');

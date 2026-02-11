@@ -1,4 +1,5 @@
 import { gql } from "@/lib/graphql";
+import { Link } from "@/app/i18n";
 import styles from "./page.module.css";
 import { TokenRefresher } from "@/app/components/TokenRefresher";
 import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
@@ -16,10 +17,18 @@ const GET_INVITATION = gql(`
       _id
       recipient
       confirmationStatus
+      phoneNumber
+      email
+      isInterestedInAccommodation
       participants {
         _id
         name
         lastName
+        age
+        celiac
+        vegetarian
+        vegan
+        intolerances
       }
     }
   }
@@ -85,9 +94,9 @@ export default async function ParticipantDetail({
           </div>
           <h2 className={styles.namesBadge}>{pageData?.header.coupleNames}</h2>
         </div>
-        <button type="button" className={styles.button}>
+        <Link href="/" className={styles.button}>
           {pageData?.header.goToSite}
-        </button>
+        </Link>
       </header>
       <div className={styles.bodyForm}>
         <h1 className={styles.title}>{pageData?.form.title}</h1>

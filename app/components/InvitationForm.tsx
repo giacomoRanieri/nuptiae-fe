@@ -1,6 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import {
+  useActionState,
+  useState,
+  startTransition,
+  useEffect,
+  useRef,
+} from "react";
 import { updateInvitationAction } from "@/app/actions/invitation";
 import {
   Age,
@@ -11,10 +17,11 @@ import {
 import styles from "./InvitationForm.module.css";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { Trash } from "lucide-react";
+import { Trash, X } from "lucide-react";
 import { ParticipantPageData } from "@/lib/types";
 import { urlFor } from "@/lib/sanity";
 import { PortableText } from "next-sanity";
+import { SuccessModal } from "./SuccessModal";
 
 interface Props {
   invitation: InvitationDto;
@@ -30,7 +37,7 @@ const initialState = {
 const emptyParticipant: Partial<ParticipantDto> = {
   name: "",
   lastName: "",
-  age: Age.ADULT,
+  age: Age.Adult,
   intolerances: "",
   celiac: false,
   vegetarian: false,
@@ -45,7 +52,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
   );
   const [status, setStatus] = useState<ConfirmationStatus>(
     (invitation.confirmationStatus as ConfirmationStatus) ||
-      ConfirmationStatus.PENDING,
+      ConfirmationStatus.Pending,
   );
 
   // Ensure at least one participant
@@ -54,6 +61,52 @@ export function InvitationForm({ invitation, pageData }: Props) {
       ? invitation.participants
       : [emptyParticipant],
   );
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const lastProcessedTimestampRef = useRef<number | undefined>(undefined);
+
+  // Sync local state with server data after revalidation
+  useEffect(() => {
+    if (invitation) {
+      if (invitation.participants) {
+        setParticipants(invitation.participants);
+      }
+      if (invitation.confirmationStatus) {
+        setStatus(invitation.confirmationStatus as ConfirmationStatus);
+      }
+    }
+  }, [invitation]);
+
+  useEffect(() => {
+    // Only trigger if we have a new timestamp that we haven't processed yet
+    if (
+      state.timestamp &&
+      state.timestamp !== lastProcessedTimestampRef.current
+    ) {
+      lastProcessedTimestampRef.current = state.timestamp;
+
+      if (state.message) {
+        // Only show inline message if it's an error OR if it's success but NOT confirmed status
+        if (!state.success || status !== ConfirmationStatus.Confirmed) {
+          setIsVisible(true);
+        }
+
+        // Show modal if success AND status is confirmed
+        if (state.success && status === ConfirmationStatus.Confirmed) {
+          setShowSuccessModal(true);
+        }
+      }
+    }
+  }, [state, status]);
+  useEffect(() => {
+    if (isVisible && state.success) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, state.success]);
 
   // Fix check for re-hydration of age enum or booleans if coming from DB
   // (Assuming invitation.participants came correct from server)
@@ -74,9 +127,23 @@ export function InvitationForm({ invitation, pageData }: Props) {
     <form action={formAction} className={styles.form}>
       <input type="hidden" name="id" value={invitation._id} />
 
-      {state.message && (
+      {state.message && isVisible && (
         <div className={state.success ? styles.success : styles.error}>
-          {state.message}
+          <span>{t(state.message)}</span>
+          <button
+            type="button"
+            onClick={() => setIsVisible(false)}
+            style={{
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: "inherit",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <X size={20} />
+          </button>
         </div>
       )}
 
@@ -87,9 +154,9 @@ export function InvitationForm({ invitation, pageData }: Props) {
             type="radio"
             id="confirmed"
             name="status"
-            value={ConfirmationStatus.CONFIRMED}
-            checked={status === ConfirmationStatus.CONFIRMED}
-            onChange={() => setStatus(ConfirmationStatus.CONFIRMED)}
+            value={ConfirmationStatus.Confirmed}
+            checked={status === ConfirmationStatus.Confirmed}
+            onChange={() => setStatus(ConfirmationStatus.Confirmed)}
           />
           <label htmlFor="confirmed" style={{ fontWeight: "normal" }}>
             {t("yes")}
@@ -100,9 +167,25 @@ export function InvitationForm({ invitation, pageData }: Props) {
             type="radio"
             id="notAttending"
             name="status"
-            value={ConfirmationStatus.NOT_ATTENDING}
-            checked={status === ConfirmationStatus.NOT_ATTENDING}
-            onChange={() => setStatus(ConfirmationStatus.NOT_ATTENDING)}
+            value={ConfirmationStatus.NotAttending}
+            checked={status === ConfirmationStatus.NotAttending}
+            onChange={() => {
+              // Optimistic update
+              setStatus(ConfirmationStatus.NotAttending);
+
+              // Trigger save immediately
+              const formData = new FormData();
+              formData.append("id", invitation._id);
+              formData.append("status", ConfirmationStatus.NotAttending);
+
+              // We can safely omit other fields as they are not needed for "Not Attending"
+              // The server action handles missing fields gracefully by setting them to undefined if needed,
+              // or just updating the status.
+
+              startTransition(() => {
+                formAction(formData);
+              });
+            }}
           />
           <label htmlFor="notAttending" style={{ fontWeight: "normal" }}>
             {t("no")}
@@ -110,7 +193,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
         </div>
       </div>
 
-      {status === ConfirmationStatus.CONFIRMED && (
+      {status === ConfirmationStatus.Confirmed && (
         <div>
           <div className={styles.responseBlock}>
             <div className={styles.responseImg}>
@@ -254,11 +337,11 @@ export function InvitationForm({ invitation, pageData }: Props) {
                         <label>{t("age")}</label>
                         <select
                           name={`participants[${index}].age`}
-                          defaultValue={participant.age || Age.ADULT}
+                          defaultValue={participant.age || Age.Adult}
                         >
-                          <option value={Age.ADULT}>{t("adult")}</option>
-                          <option value={Age.CHILD}>{t("child")}</option>
-                          <option value={Age.INFANT}>{t("infant")}</option>
+                          <option value={Age.Adult}>{t("adult")}</option>
+                          <option value={Age.Child}>{t("child")}</option>
+                          <option value={Age.Infant}>{t("infant")}</option>
                         </select>
                       </div>
 
@@ -277,7 +360,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                             <input
                               type="checkbox"
                               name={`participants[${index}].celiac`}
-                              checked={participant.celiac}
+                              defaultChecked={participant.celiac}
                             />
                             {t("celiac")}
                           </label>
@@ -287,7 +370,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                             <input
                               type="checkbox"
                               name={`participants[${index}].vegetarian`}
-                              checked={participant.vegetarian}
+                              defaultChecked={participant.vegetarian}
                             />
                             {t("vegetarian")}
                           </label>
@@ -297,7 +380,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                             <input
                               type="checkbox"
                               name={`participants[${index}].vegan`}
-                              checked={participant.vegan}
+                              defaultChecked={participant.vegan}
                             />
                             {t("vegan")}
                           </label>
@@ -336,32 +419,42 @@ export function InvitationForm({ invitation, pageData }: Props) {
         </div>
       )}
 
-      {status === ConfirmationStatus.NOT_ATTENDING && (
-        <div className={styles.responseBlock}>
-          <div className={styles.responseImg}>
-            {pageData?.willNotAttend?.image && (
-              <Image
-                src={urlFor(pageData.willNotAttend.image).url()}
-                alt="Immagine triste"
-                width={156}
-                height={156}
-              />
-            )}
-          </div>
-          <div>
-            <h2 className={styles.titleOrange}>
-              {pageData?.willNotAttend?.title}
-            </h2>
-            <div className={styles.description}>
-              {pageData?.willNotAttend?.description ? (
-                <PortableText value={pageData.willNotAttend.description} />
-              ) : (
-                <></>
+      {status === ConfirmationStatus.NotAttending && (
+        <>
+          <div className={styles.responseBlock}>
+            <div className={styles.responseImg}>
+              {pageData?.willNotAttend?.image && (
+                <Image
+                  src={urlFor(pageData.willNotAttend.image).url()}
+                  alt="Immagine triste"
+                  width={156}
+                  height={156}
+                />
               )}
             </div>
+            <div>
+              <h2 className={styles.titleOrange}>
+                {pageData?.willNotAttend?.title}
+              </h2>
+              <div className={styles.description}>
+                {pageData?.willNotAttend?.description ? (
+                  <PortableText value={pageData.willNotAttend.description} />
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+          {/* Submit button removed as per request - action triggers on selection */}
+        </>
       )}
+      <SuccessModal
+        title={pageData?.willAttend?.successDialog?.title}
+        message={pageData?.willAttend?.successDialog?.message}
+        close={pageData?.willAttend?.successDialog?.close}
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+      />
     </form>
   );
 }

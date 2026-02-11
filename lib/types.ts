@@ -74,6 +74,11 @@ export interface ParticipantPageData {
       image: SanityImageSource;
       needAccommodationTitle: string;
       needAccommodationDescription: TypedObject | TypedObject[];
+      successDialog: {
+        title: string;
+        message: TypedObject | TypedObject[];
+        close: string;
+      };
     };
   };
 }
