@@ -25,5 +25,40 @@
     "days": "GIORNI",
     "hours": "ORE",
     "minutes": "MINUTI"
+  },
+  "SuccessModal": {
+    "title": "Evviva!",
+    "message": "La tua partecipazione è stata salvata correttamente. Non vediamo l'ora di festeggiare con te!",
+    "close": "Chiudi"
+  },
+  "InvitationForm": {
+    "update": {
+      "success": "Partecipazione salvata con successo!",
+      "failed": "Errore durante il salvataggio della partecipazione"
+    },
+    "confirmationStatus": "Ci sarai al matrimonio?",
+    "confirmed": "Confermato",
+    "notAttending": "Non parteciperà",
+    "pending": "In attesa",
+    "email": "Email",
+    "phoneNumber": "Numero di telefono",
+    "submit": "Salva partecipazione",
+    "saving": "Salvataggio...",
+    "notAttendingMessage": "Ci dispiace che non sarai dei nostri!",
+    "name": "Nome",
+    "lastName": "Cognome",
+    "age": "Età",
+    "adult": "Adulto",
+    "child": "Bambino (< 12 anni)",
+    "infant": "Neonato (< 2 anni)",
+    "intolerances": "Intolleranze",
+    "celiac": "Celiaco",
+    "vegetarian": "Vegetariano",
+    "vegan": "Vegano",
+    "yes": "Si",
+    "no": "No",
+    "addParticipant": "Aggiungi partecipante",
+    "removeParticipant": "Rimuovi",
+    "participantsListTitle": "Per chi è stata confermata la partecipazione?"
   }
 }

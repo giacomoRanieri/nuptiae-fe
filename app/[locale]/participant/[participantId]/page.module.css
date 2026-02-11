@@ -1,0 +1,85 @@
+h1.title {
+    font-family: var(--font-handwriting), serif;
+    font-weight: normal;
+    padding-left: 1rem;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem 0 0;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.logoAndNames {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.dinos {
+    width: 48px;
+    height: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+}
+
+.namesBadge {
+    background-color: var(--color-blue);
+    color: white;
+    padding: 0.2rem 1.1rem;
+    border-radius: 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-sans), sans-serif;
+    align-self: stretch;
+    align-content: center;
+    white-space: nowrap;
+}
+
+.button {
+    border: 1px solid var(--color-blue);
+    background-color: white;
+    color: var(--color-blue);
+    font-size: 1.2rem;
+    border-radius: 30px;
+    padding: 0.6rem 2.5rem;
+    font-weight: 600;
+}
+button.button:hover {
+    background-color: color-mix(in oklab, var(--color-blue), white 80%);
+}
+
+.bodyForm {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: 2rem;
+}
+.headline {
+    width: 75%;
+    line-height: 160%;
+    font-size: 1.2rem;
+}
+.bold {
+    font-weight: bold;
+}
+@media screen and (max-width: 600px) {
+    .headline {
+        width: 100%;
+        padding-left: 1rem;
+    }
+    .header {
+        padding: 1rem 0.5rem 0;
+    }
+    .namesBadge {
+        font-size: 1rem;
+        align-self: center;
+        padding: 0.5rem 0.8rem;
+    }
+    .dinos {
+        width: 40px;
+    }
+    .button {
+        padding: 0.6rem 2rem;
+    }
+}
