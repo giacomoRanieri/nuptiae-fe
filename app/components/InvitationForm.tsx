@@ -327,6 +327,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                         <label>{t("lastName")}</label>
                         <input
                           type="text"
+                          required
                           name={`participants[${index}].lastName`}
                           defaultValue={participant.lastName}
                           style={{ width: "100%" }}
@@ -337,6 +338,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                         <label>{t("age")}</label>
                         <select
                           name={`participants[${index}].age`}
+                          required
                           defaultValue={participant.age || Age.Adult}
                         >
                           <option value={Age.Adult}>{t("adult")}</option>
