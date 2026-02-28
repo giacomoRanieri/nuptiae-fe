@@ -26,11 +26,6 @@
     "hours": "ORE",
     "minutes": "MINUTI"
   },
-  "SuccessModal": {
-    "title": "Evviva!",
-    "message": "La tua partecipazione è stata salvata correttamente. Non vediamo l'ora di festeggiare con te!",
-    "close": "Chiudi"
-  },
   "InvitationForm": {
     "update": {
       "success": "Partecipazione salvata con successo!",

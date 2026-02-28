@@ -25,10 +25,21 @@ export interface EventDetails {
   locationImage: SanityImageSource;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface FaqData {
+  title: string;
+  faqList: FaqItem[];
+}
+
 export interface HomePageData {
   hero: HeroData;
   timeline: TimelineItem[];
   event: EventDetails;
+  faq: FaqData;
 }
 
 export interface PoliciesData {
