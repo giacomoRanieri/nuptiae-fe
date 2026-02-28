@@ -3,7 +3,8 @@
     "welcome": "Welcome",
     "ourStory": "Chi siamo",
     "details": "Come arrivare",
-    "uploadPhoto": "Carica foto"
+    "uploadPhoto": "Carica foto",
+    "helpUs": "Aiutaci"
   },
   "Hero": {
     "fallbackNames": "Loredana & Giacomo"

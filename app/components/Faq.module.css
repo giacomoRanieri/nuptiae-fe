@@ -54,6 +54,11 @@
     padding: 0.75rem;
     border-radius: 8px;
     border-width: 2px;
+    border-style: solid;
+}
+
+.answerWrapper p {
+    margin: 0;
 }
 
 .faqRow:nth-child(odd) .answerWrapper {
@@ -64,7 +69,11 @@
     background-color: var(--color-light-blue-50percent);
 }
 
-.answerWrapper p {
+.faqRow:nth-child(odd) .answerWrapper p {
+    color: #000000;
+}
+
+.faqRow:nth-child(even) .answerWrapper p {
     color: #FFFFFF;
 }
 
@@ -180,6 +189,7 @@
 
     .title {
         text-align: center;
+        margin: 0;
     }
 
     .listColumn,

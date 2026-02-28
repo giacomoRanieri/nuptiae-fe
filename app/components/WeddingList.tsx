@@ -93,8 +93,7 @@ export default function WeddingList({ data }: WeddingListProps) {
               <Image
                 src={urlFor(image).url()}
                 alt={title}
-                width={400}
-                height={500}
+                fill
                 className={styles.mainImage}
               />
             )}
