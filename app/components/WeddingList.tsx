@@ -101,12 +101,14 @@ export default function WeddingList({ data }: WeddingListProps) {
           </div>
         </div>
         <div className={styles.rightColumn}>
-          <div className={styles.iconsContainer}>
-            <div className={styles.iconWrapper}>
-              <Image width={130} height={85} src="/presents.svg" alt="Rings" />
+          <div className={styles.iconWrapper}>
+            <div>
+              <Image fill src="/presents.svg" alt="Presents" />
             </div>
-            <div className={styles.iconWrapper}>
-              <Image width={130} height={85} src="/tickets.svg" alt="Glasses" />
+          </div>
+          <div className={styles.iconWrapper}>
+            <div>
+              <Image fill src="/tickets.svg" alt="Tickets" />
             </div>
           </div>
         </div>

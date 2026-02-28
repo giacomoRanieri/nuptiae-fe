@@ -49,12 +49,18 @@ export const Countdown = ({ targetDate }: CountdownProps) => {
         <span className={styles.label}>{t("days")}</span>
       </div>
       <div className={styles.item}>
-        <span className={styles.number}>{timeLeft.hours.toLocaleString()}</span>
+        <span className={styles.number}>
+          {timeLeft.hours.toLocaleString(undefined, {
+            minimumIntegerDigits: 2,
+          })}
+        </span>
         <span className={styles.label}>{t("hours")}</span>
       </div>
       <div className={styles.item}>
         <span className={styles.number}>
-          {timeLeft.minutes.toLocaleString()}
+          {timeLeft.minutes.toLocaleString(undefined, {
+            minimumIntegerDigits: 2,
+          })}
         </span>
         <span className={styles.label}>{t("minutes")}</span>
       </div>

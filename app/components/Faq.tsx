@@ -32,16 +32,23 @@ export default function Faq({ data }: FaqProps) {
               className={`${styles.faqRow} ${openIndex === index ? styles.active : ""}`}
               onClick={() => toggleQuestion(index)}
             >
-              <h3 className={styles.questionTitle}>{faq.question}</h3>
+              <div className={styles.questionWrapper}>
+                <h3 className={styles.questionTitle}>{faq.question}</h3>
+                {openIndex === index ? (
+                  <div className={styles.iconWrapper}>
+                    <Minus size={20} strokeWidth={3} className={styles.icon} />
+                  </div>
+                ) : (
+                  <div className={styles.iconWrapper}>
+                    <Plus size={20} strokeWidth={3} className={styles.icon} />
+                  </div>
+                )}
+              </div>
               {openIndex === index ? (
-                <div className={styles.iconWrapper}>
-                  <Minus size={20} strokeWidth={3} className={styles.icon} />
+                <div className={styles.answerWrapper}>
+                  <p>{openAnswer}</p>
                 </div>
-              ) : (
-                <div className={styles.iconWrapper}>
-                  <Plus size={20} strokeWidth={3} className={styles.icon} />
-                </div>
-              )}
+              ) : null}
             </div>
           ))}
         </div>
