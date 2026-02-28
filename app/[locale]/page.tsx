@@ -3,6 +3,8 @@ import Header from "@/app/components/Header";
 import Hero from "@/app/components/Hero";
 import OurStory from "@/app/components/OurStory";
 import WeddingDetails from "@/app/components/WeddingDetails";
+import WeddingList from "@/app/components/WeddingList";
+import Faq from "@/app/components/Faq";
 import { client } from "@/lib/sanity";
 import styles from "./page.module.css";
 
@@ -14,7 +16,9 @@ async function getHomeData() {
     *[_type == "home"][0] {
       hero,
       timeline,
-      event
+      event,
+      weddingList,
+      faq
     }
   `);
 }
@@ -32,7 +36,7 @@ export default async function Home() {
     );
   }
 
-  const { hero, timeline, event } = data;
+  const { hero, timeline, event, weddingList, faq } = data;
 
   return (
     <div>
@@ -41,6 +45,8 @@ export default async function Home() {
         <Hero data={hero} />
         <OurStory data={timeline} />
         <WeddingDetails data={event} />
+        <WeddingList data={weddingList} />
+        <Faq data={faq} />
       </main>
       <Footer />
     </div>

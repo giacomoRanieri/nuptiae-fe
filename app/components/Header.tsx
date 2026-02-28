@@ -22,14 +22,14 @@ export default function Header() {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.links}>
-          <Link href={getLink("welcome")} className={styles.link}>
-            {t("welcome")}
-          </Link>
           <Link href={getLink("story")} className={styles.link}>
             {t("ourStory")}
           </Link>
           <Link href={getLink("details")} className={styles.link}>
             {t("details")}
+          </Link>
+          <Link href={getLink("wedding-list")} className={styles.link}>
+            {t("helpUs")}
           </Link>
         </div>
         {(isPhotoUploadEnabled || isUserIconEnabled) && (
