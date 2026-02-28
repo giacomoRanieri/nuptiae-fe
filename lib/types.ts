@@ -25,6 +25,16 @@ export interface EventDetails {
   locationImage: SanityImageSource;
 }
 
+export interface WeddingListData {
+  title: string;
+  description: TypedObject | TypedObject[];
+  image: SanityImageSource;
+  actionType: 'link' | 'action';
+  actionText: string;
+  actionUrl?: string;
+  actionMethod?: string;
+}
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -39,6 +49,7 @@ export interface HomePageData {
   hero: HeroData;
   timeline: TimelineItem[];
   event: EventDetails;
+  weddingList: WeddingListData;
   faq: FaqData;
 }
 

@@ -1,0 +1,118 @@
+.weddingList {
+    width: 100%;
+    max-width: 1240px;
+    margin: 5rem auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-family: var(--font-handwriting), serif;
+    width: 100%;
+    font-size: 3.75rem;
+    color: var(--color-blue);
+    margin-bottom: 3rem;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .content {
+        flex-direction: row;
+    }
+
+    .leftColumn {
+        width: 50%;
+    }
+
+    .centerColumn {
+        width: 40%;
+    }
+
+    .rightColumn {
+        width: 10%;
+    }
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.ctaButton {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    background-color: var(--color-terracotta);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+    background-color: var(--color-orange);
+}
+
+.centerColumn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    max-height: 300px;
+    max-width: 400px;
+    display: flex;
+}
+
+.mainImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.rightColumn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.iconWrapper:nth-child(odd) {
+    background-color: var(--color-terracotta);
+}
+
+.iconWrapper:nth-child(even) {
+    background-color: var(--color-light-blue);
+}
+
+.iconWrapper {
+    position: relative;
+    border-radius: 30px;
+    padding: 1.5rem;
+}
