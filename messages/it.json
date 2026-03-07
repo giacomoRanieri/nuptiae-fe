@@ -3,7 +3,8 @@
     "welcome": "Welcome",
     "ourStory": "Chi siamo",
     "details": "Come arrivare",
-    "uploadPhoto": "Carica foto"
+    "uploadPhoto": "Carica foto",
+    "helpUs": "Aiutaci"
   },
   "Hero": {
     "fallbackNames": "Loredana & Giacomo"
@@ -25,11 +26,6 @@
     "days": "GIORNI",
     "hours": "ORE",
     "minutes": "MINUTI"
-  },
-  "SuccessModal": {
-    "title": "Evviva!",
-    "message": "La tua partecipazione è stata salvata correttamente. Non vediamo l'ora di festeggiare con te!",
-    "close": "Chiudi"
   },
   "InvitationForm": {
     "update": {

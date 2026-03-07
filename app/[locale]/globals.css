@@ -4,6 +4,7 @@
   --color-terracotta: #E67139;
   --color-blue: #102E4A;
   --color-light-blue: #5C95FF;
+  --color-light-blue-50percent: #5C95FF80;
   --color-orange: #FFBA7E;
   --color-orange-50percent: #FFBA7E80;
   --font-handwriting: 'Lucida Handwriting', 'Brush Script MT', cursive;
@@ -50,7 +51,8 @@ a {
   text-decoration: none;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: var(--color-blue);
 }
 
@@ -70,7 +72,7 @@ ol {
   padding-left: 30px;
 }
 
-ol > li {
+ol>li {
   margin-top: 0.5rem;
 }
 
@@ -80,7 +82,7 @@ ul {
   padding-left: 30px;
 }
 
-ul > li {
+ul>li {
   margin-top: 0.25rem;
 }
 
@@ -90,7 +92,7 @@ ul > li {
   }
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
   html {
     font-size: 14px;
   }
