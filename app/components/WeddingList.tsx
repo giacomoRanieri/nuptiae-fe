@@ -1,10 +1,11 @@
 "use client";
 
+import { logger } from "@/lib/logger";
+import { PortableText } from "next-sanity";
 import Image from "next/image";
 import { urlFor } from "../../lib/sanity";
 import { WeddingListData } from "../../lib/types";
 import styles from "./WeddingList.module.css";
-import { PortableText } from "next-sanity";
 
 interface WeddingListProps {
   data: WeddingListData;
@@ -65,7 +66,7 @@ export default function WeddingList({ data }: WeddingListProps) {
         if (typeof method === "function") {
           (method as () => void)(); // Cast to a function type before calling
         } else {
-          console.warn(
+          logger.warn(
             `Action method ${actionMethod} not found on localActions or window object.`,
           );
         }

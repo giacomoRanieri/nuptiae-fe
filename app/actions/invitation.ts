@@ -1,15 +1,15 @@
 "use server";
 
+import { getClient } from "@/lib/api/graphql-client";
 import { gql } from "@/lib/graphql";
 import {
-  UpdateInvitationInput,
-  UpdateInvitationParticipantsInput,
+  Age,
   ConfirmationStatus,
-  Age
+  UpdateInvitationInput
 } from "@/lib/graphql/graphql";
-import { getClient } from "@/lib/api/graphql-client";
-import { revalidatePath } from "next/cache";
+import { logger } from "@/lib/logger";
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { revalidatePath } from "next/cache";
 
 const UPDATE_INVITATION = gql(`
   mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {
@@ -145,7 +145,7 @@ export async function updateInvitationAction(
 
     return { success: true, message: "update.success", timestamp: Date.now() };
   } catch (error) {
-    console.error("Update failed:", error);
+    logger.error("Update failed:", error);
     return { success: false, message: "update.failed", timestamp: Date.now() };
   }
 }

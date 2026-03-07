@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { routing } from './app/i18n';
+import { logger } from './lib/logger';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -13,7 +14,7 @@ export default async function middleware(request: NextRequest) {
   if (pathname.includes('/participant/') && !accessToken) {
     const token = searchParams.get('token');
 
-    // Extract participantId from path (roughly) or pass it if needed. 
+    // Extract participantId from path (roughly) or pass it if needed.
     // pathname: /en/participant/123
     const parts = pathname.split('/');
     const participantIndex = parts.indexOf('participant');
@@ -49,13 +50,13 @@ export default async function middleware(request: NextRequest) {
             return response;
           }
         } else {
-          console.error("Middleware Login failed", loginResponse.status);
+          logger.error("Middleware Login failed", loginResponse.status);
           const errorUrl = request.nextUrl.clone();
           errorUrl.pathname = `/${parts[1]}/error`; // Maintain locale
           return NextResponse.redirect(errorUrl);
         }
       } catch (e) {
-        console.error("Middleware Middleware error", e);
+        logger.error("Middleware Middleware error", e);
       }
     }
   }
