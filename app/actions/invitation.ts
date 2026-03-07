@@ -109,7 +109,7 @@ export async function updateInvitationAction(
           rawParticipants[index] = {} as RawParticipant;
         }
 
-        // We know value is string because FormData entries are [string, FormDataEntryValue] 
+        // We know value is string because FormData entries are [string, FormDataEntryValue]
         // and we are using inputs which return strings.
         // However, TS checks might be strict.
         rawParticipants[index][field] = value as string;

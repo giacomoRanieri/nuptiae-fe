@@ -50,7 +50,9 @@ export default async function middleware(request: NextRequest) {
           }
         } else {
           console.error("Middleware Login failed", loginResponse.status);
-          // Allow request to proceed (will be handled by page -> error)
+          const errorUrl = request.nextUrl.clone();
+          errorUrl.pathname = `/${parts[1]}/error`; // Maintain locale
+          return NextResponse.redirect(errorUrl);
         }
       } catch (e) {
         console.error("Middleware Middleware error", e);

@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { Link } from "@/app/i18n";
+import { Link, redirect } from "@/app/i18n";
 import styles from "./page.module.css";
 import { TokenRefresher } from "@/app/components/TokenRefresher";
 import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
@@ -51,9 +51,9 @@ async function getParticipantPageData() {
 export default async function ParticipantDetail({
   params,
 }: {
-  params: Promise<{ participantId: string }>;
+  params: Promise<{ locale: string; participantId: string }>;
 }) {
-  const { participantId } = await params;
+  const { locale, participantId } = await params;
   const pageData = await getParticipantPageData();
 
   // Note: Middleware now intercepts when the 'at' cookie is missing and sets it.
@@ -77,12 +77,8 @@ export default async function ParticipantDetail({
     authError = "Error loading invitation. Please try logging in again.";
   }
 
-  if (authError) {
-    return <div>Error: {authError}</div>;
-  }
-
-  if (!invitationData) {
-    return <div>Loading...</div>;
+  if (authError || !invitationData) {
+    return redirect({ href: "/error", locale });
   }
 
   return (
