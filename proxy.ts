@@ -34,7 +34,7 @@ export default async function middleware(request: NextRequest) {
           let cookie = loginResponse.headers.get('set-cookie');
           if (cookie) {
             if (process.env.NODE_ENV === 'development') {
-              cookie = cookie.split(';')[0]
+              cookie = cookie.split(';')[0] + '; Path=/';
             }
 
             // Create response redirecting to same URL without token
