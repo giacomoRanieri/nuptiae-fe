@@ -32,10 +32,16 @@ export default async function middleware(request: NextRequest) {
         });
 
         if (loginResponse.ok) {
-          let cookie = loginResponse.headers.get('set-cookie');
-          if (cookie) {
-            if (process.env.NODE_ENV === 'development') {
-              cookie = cookie.split(';')[0] + '; Path=/';
+          let setCookie = loginResponse.headers.get('set-cookie');
+          logger.warn("[middleware] set-cookie", setCookie);
+          if (setCookie) {
+            if (process.env.NODE_ENV === 'production') {
+              setCookie = setCookie.replace(/SameSite=Strict/i, 'SameSite=Lax');
+              if (!setCookie.includes('Domain=')) {
+                setCookie += '; Domain=.giacomoloredana.it';
+              }
+            } else {
+              setCookie = setCookie.split(';')[0] + '; Path=/';
             }
 
             // Create response redirecting to same URL without token
@@ -45,7 +51,7 @@ export default async function middleware(request: NextRequest) {
             const response = NextResponse.redirect(nextUrl);
 
             // Copy the Set-Cookie header from backend to browser response
-            response.headers.set('Set-Cookie', cookie);
+            response.headers.set('Set-Cookie', setCookie);
 
             return response;
           }
