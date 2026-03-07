@@ -9,7 +9,7 @@ interface FaqProps {
 }
 
 export default function Faq({ data }: FaqProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Use translations for the default text "Select a question..."
   // const t = useTranslations("Index"); // fallback // Removed as per instruction

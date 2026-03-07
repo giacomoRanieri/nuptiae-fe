@@ -31,7 +31,7 @@
 }
 
 .title {
-    color: #E67139;
+    color: var(--color-terracotta);
     font-weight: bold;
     font-size: 1.4rem;
     line-height: 2rem;
@@ -44,10 +44,10 @@
 }
 
 .button {
-    background-color: #E67139;
+    background-color: var(--color-terracotta);
     color: white;
-    border: none;
-    padding: 0.75rem 2rem;
+    border: 2px solid var(--color-terracotta);
+    padding: 1rem;
     border-radius: 5px;
     font-size: 1.1rem;
     font-weight: 600;

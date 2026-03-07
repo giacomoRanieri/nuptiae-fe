@@ -106,7 +106,7 @@
     height: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
     .content {
         flex-direction: row;
     }
@@ -129,7 +129,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .weddingList {
         gap: 0;
     }
@@ -138,6 +138,10 @@
         text-align: center;
         padding: 1rem;
         margin: 0;
+    }
+
+    .description {
+        text-align: center;
     }
 
     .leftColumn,

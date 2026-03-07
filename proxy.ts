@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { routing } from './app/i18n';
+import { logger } from './lib/logger';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -13,7 +14,7 @@ export default async function middleware(request: NextRequest) {
   if (pathname.includes('/participant/') && !accessToken) {
     const token = searchParams.get('token');
 
-    // Extract participantId from path (roughly) or pass it if needed. 
+    // Extract participantId from path (roughly) or pass it if needed.
     // pathname: /en/participant/123
     const parts = pathname.split('/');
     const participantIndex = parts.indexOf('participant');
@@ -22,7 +23,7 @@ export default async function middleware(request: NextRequest) {
       const participantId = parts[participantIndex + 1];
 
       try {
-        const BASE_URL = process.env.NEXT_PUBLIC_AUTH_ENDPOINT || 'http://localhost:3000';
+        const BASE_URL = process.env.NEXT_PUBLIC_LOGIN_ENDPOINT || 'http://localhost:3000';
 
         const loginResponse = await fetch(`${BASE_URL}/auth/login`, {
           method: 'POST',
@@ -31,10 +32,16 @@ export default async function middleware(request: NextRequest) {
         });
 
         if (loginResponse.ok) {
-          let cookie = loginResponse.headers.get('set-cookie');
-          if (cookie) {
-            if (process.env.NODE_ENV === 'development') {
-              cookie = cookie.split(';')[0]
+          let setCookie = loginResponse.headers.get('set-cookie');
+          logger.warn("[middleware] set-cookie", setCookie);
+          if (setCookie) {
+            if (process.env.NODE_ENV === 'production') {
+              setCookie = setCookie.replace(/SameSite=Strict/i, 'SameSite=Lax');
+              if (!setCookie.includes('Domain=')) {
+                setCookie += '; Domain=.giacomoloredana.it';
+              }
+            } else {
+              setCookie = setCookie.split(';')[0] + '; Path=/';
             }
 
             // Create response redirecting to same URL without token
@@ -44,16 +51,18 @@ export default async function middleware(request: NextRequest) {
             const response = NextResponse.redirect(nextUrl);
 
             // Copy the Set-Cookie header from backend to browser response
-            response.headers.set('Set-Cookie', cookie);
+            response.headers.set('Set-Cookie', setCookie);
 
             return response;
           }
         } else {
-          console.error("Middleware Login failed", loginResponse.status);
-          // Allow request to proceed (will be handled by page -> error)
+          logger.error("Middleware Login failed", loginResponse.status);
+          const errorUrl = request.nextUrl.clone();
+          errorUrl.pathname = `/${parts[1]}/error`; // Maintain locale
+          return NextResponse.redirect(errorUrl);
         }
       } catch (e) {
-        console.error("Middleware Middleware error", e);
+        logger.error("Middleware Middleware error", e);
       }
     }
   }

@@ -8,10 +8,11 @@ export const { getClient } = registerApolloClient(async () => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+      uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT + '/graphql',
       headers: {
         Cookie: cookieStore.toString(),
       },
+      fetchOptions: { cache: "no-store" },
     }),
   });
 });

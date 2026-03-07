@@ -1,15 +1,15 @@
 "use server";
 
+import { getClient } from "@/lib/api/graphql-client";
 import { gql } from "@/lib/graphql";
 import {
-  UpdateInvitationInput,
-  UpdateInvitationParticipantsInput,
+  Age,
   ConfirmationStatus,
-  Age
+  UpdateInvitationInput
 } from "@/lib/graphql/graphql";
-import { getClient } from "@/lib/api/graphql-client";
-import { revalidatePath } from "next/cache";
+import { logger } from "@/lib/logger";
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { revalidatePath } from "next/cache";
 
 const UPDATE_INVITATION = gql(`
   mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {
@@ -109,7 +109,7 @@ export async function updateInvitationAction(
           rawParticipants[index] = {} as RawParticipant;
         }
 
-        // We know value is string because FormData entries are [string, FormDataEntryValue] 
+        // We know value is string because FormData entries are [string, FormDataEntryValue]
         // and we are using inputs which return strings.
         // However, TS checks might be strict.
         rawParticipants[index][field] = value as string;
@@ -145,7 +145,7 @@ export async function updateInvitationAction(
 
     return { success: true, message: "update.success", timestamp: Date.now() };
   } catch (error) {
-    console.error("Update failed:", error);
+    logger.error("Update failed:", error);
     return { success: false, message: "update.failed", timestamp: Date.now() };
   }
 }
