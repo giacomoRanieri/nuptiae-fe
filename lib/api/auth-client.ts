@@ -9,7 +9,7 @@ export interface AuthClient {
     refresh(): Promise<Response>;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_AUTH_ENDPOINT || 'http://localhost:3000';
+const BASE_URL = process.env.NEXT_PUBLIC_REFRESH_ENDPOINT || 'http://localhost:3000';
 
 export const authClient: AuthClient = {
     login: async (guestId: string, token: string) => {

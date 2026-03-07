@@ -22,7 +22,7 @@ export default async function middleware(request: NextRequest) {
       const participantId = parts[participantIndex + 1];
 
       try {
-        const BASE_URL = process.env.NEXT_PUBLIC_AUTH_ENDPOINT || 'http://localhost:3000';
+        const BASE_URL = process.env.NEXT_PUBLIC_LOGIN_ENDPOINT || 'http://localhost:3000';
 
         const loginResponse = await fetch(`${BASE_URL}/auth/login`, {
           method: 'POST',
