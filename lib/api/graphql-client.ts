@@ -12,6 +12,7 @@ export const { getClient } = registerApolloClient(async () => {
       headers: {
         Cookie: cookieStore.toString(),
       },
+      fetchOptions: { cache: "no-store" },
     }),
   });
 });

@@ -1,26 +1,30 @@
 "use client";
 
 import {
-  useActionState,
-  useState,
-  startTransition,
-  useEffect,
-  useRef,
-} from "react";
-import { updateInvitationAction } from "@/app/actions/invitation";
+  InvitationFormState,
+  updateInvitationAction,
+} from "@/app/actions/invitation";
 import {
   Age,
   ConfirmationStatus,
   InvitationDto,
   ParticipantDto,
 } from "@/lib/graphql/graphql";
-import styles from "./InvitationForm.module.css";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { Trash, X } from "lucide-react";
-import { ParticipantPageData } from "@/lib/types";
+import { logger } from "@/lib/logger";
 import { urlFor } from "@/lib/sanity";
+import { ParticipantPageData } from "@/lib/types";
+import { Trash, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PortableText } from "next-sanity";
+import Image from "next/image";
+import {
+  startTransition,
+  useTransition,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import styles from "./InvitationForm.module.css";
 import { SuccessModal } from "./SuccessModal";
 
 interface Props {
@@ -28,7 +32,7 @@ interface Props {
   pageData?: ParticipantPageData["form"];
 }
 
-const initialState = {
+const initialState: InvitationFormState = {
   message: "",
   success: false,
 };
@@ -46,10 +50,23 @@ const emptyParticipant: Partial<ParticipantDto> = {
 
 export function InvitationForm({ invitation, pageData }: Props) {
   const t = useTranslations("InvitationForm");
-  const [state, formAction, isPending] = useActionState(
-    updateInvitationAction,
-    initialState,
-  );
+  const [state, setState] = useState<InvitationFormState>(initialState);
+  const [isPending, startTransitionHook] = useTransition();
+
+  const formAction = (formData: FormData) => {
+    startTransitionHook(async () => {
+      try {
+        const result = await updateInvitationAction(state, formData);
+        setState(result);
+      } catch (err) {
+        setState({
+          success: false,
+          message: "update.failed",
+          timestamp: Date.now(),
+        });
+      }
+    });
+  };
   const [status, setStatus] = useState<ConfirmationStatus>(
     (invitation.confirmationStatus as ConfirmationStatus) ||
       ConfirmationStatus.Pending,
@@ -69,8 +86,10 @@ export function InvitationForm({ invitation, pageData }: Props) {
   // Sync local state with server data after revalidation
   useEffect(() => {
     if (invitation) {
-      if (invitation.participants) {
+      if (invitation.participants && invitation.participants.length > 0) {
         setParticipants(invitation.participants);
+      } else {
+        setParticipants([emptyParticipant]);
       }
       if (invitation.confirmationStatus) {
         setStatus(invitation.confirmationStatus as ConfirmationStatus);
@@ -112,19 +131,23 @@ export function InvitationForm({ invitation, pageData }: Props) {
   // (Assuming invitation.participants came correct from server)
 
   const addParticipant = () => {
-    console.log("Adding participant");
+    logger.debug("Adding participant");
     setParticipants([...participants, emptyParticipant]);
   };
 
   const removeParticipant = (index: number) => {
-    console.log("Removing participant", index);
+    logger.debug("Removing participant", index);
     const newParticipants = [...participants];
     newParticipants.splice(index, 1);
     setParticipants(newParticipants);
   };
 
   return (
-    <form action={formAction} className={styles.form}>
+    <form
+      key={JSON.stringify(invitation)}
+      action={formAction}
+      className={styles.form}
+    >
       <input type="hidden" name="id" value={invitation._id} />
 
       {state.message && isVisible && (
@@ -148,7 +171,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
       )}
 
       <div className={styles.blockLine} style={{ padding: "2rem 1rem" }}>
-        <label className={styles.labelBold}>{t("confirmationStatus")}</label>
+        <div className={styles.labelBold}>{t("confirmationStatus")}</div>
         <div className={styles.radioBtn}>
           <input
             type="radio"
@@ -182,7 +205,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
               // The server action handles missing fields gracefully by setting them to undefined if needed,
               // or just updating the status.
 
-              startTransition(() => {
+              startTransitionHook(async () => {
                 formAction(formData);
               });
             }}
@@ -295,13 +318,19 @@ export function InvitationForm({ invitation, pageData }: Props) {
                 {participants.map((participant, index) => (
                   <div key={index} className={styles.wrapperMain}>
                     <div className={styles.numBtnGroup}>
-                      <h4>{index + 1}</h4>
+                      <div>
+                        <h4>{index + 1}</h4>
+                      </div>
                       {index > 0 && (
                         <button
                           type="button"
                           onClick={() => removeParticipant(index)}
                         >
-                          <Trash width={26} height={26} />
+                          <Trash
+                            width={26}
+                            height={26}
+                            style={{ verticalAlign: "middle" }}
+                          />
                         </button>
                       )}
                     </div>
@@ -395,13 +424,7 @@ export function InvitationForm({ invitation, pageData }: Props) {
                 ))}
               </div>
 
-              <div
-                style={{
-                  marginTop: "1rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div className={styles.buttonRow}>
                 <button
                   type="button"
                   onClick={addParticipant}
