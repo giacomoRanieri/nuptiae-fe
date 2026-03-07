@@ -56,5 +56,10 @@
     "addParticipant": "Aggiungi partecipante",
     "removeParticipant": "Rimuovi",
     "participantsListTitle": "Per chi è stata confermata la partecipazione?"
+  },
+  "ErrorPage": {
+    "title": "Accesso non autorizzato",
+    "description": "Si è verificato un errore durante l'accesso. Il link potrebbe essere non valido, scaduto, oppure non hai i permessi necessari per visualizzare questa pagina.",
+    "backHome": "Torna alla Home"
   }
 }
