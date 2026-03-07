@@ -19,7 +19,7 @@
 }
 
 .wrapperMain {
-    border-bottom: 2px solid #E67139;
+    border-bottom: 2px solid var(--color-terracotta);
 }
 
 .wrapperMain>* {
@@ -27,7 +27,8 @@
 }
 
 .wrapperMain>div:first-child {
-    grid-column: span 1
+    grid-column: span 1;
+    max-width: 50px;
 }
 
 .field {
@@ -80,7 +81,7 @@
 .checkboxLabel input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
-    accent-color: #E67139;
+    accent-color: var(--color-terracotta);
     background-color: #FFFFFF;
     width: 20px;
     height: 20px;
@@ -88,7 +89,7 @@
 
 .checkboxLabel input[type="checkbox"]:checked {
     accent-color: #FFFFFF;
-    background-color: #E67139;
+    background-color: var(--color-terracotta);
 }
 
 .checkboxLabel input[type="checkbox"]::before {
@@ -117,13 +118,20 @@
     margin-top: 2rem;
 }
 
+.buttonRow {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
 .submitButton {
-    padding: 0.75rem 2rem;
-    background: #E67139;
+    padding: 1rem;
+    background: var(--color-terracotta);
+    border: 2px solid var(--color-terracotta);
     color: white;
-    border: none;
     border-radius: 0.5rem;
     font-size: 1.2rem;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -153,8 +161,8 @@
 }
 
 .blockLine {
-    border-bottom: 2px solid #E67139;
-    border-top: 2px solid #E67139;
+    border-bottom: 2px solid var(--color-terracotta);
+    border-top: 2px solid var(--color-terracotta);
 }
 
 .labelBold {
@@ -220,7 +228,7 @@
 }
 
 .titleOrange {
-    color: #E67139;
+    color: var(--color-terracotta);
     font-weight: bold;
     font-size: 1.4rem;
     line-height: 2rem;
@@ -266,20 +274,29 @@
     flex-direction: column;
     gap: 1rem;
     justify-content: flex-start;
+    align-items: baseline;
 }
 
-.numBtnGroup h4 {
-    padding: 0.8rem 1rem;
-    background-color: #E67139;
+.numBtnGroup div {
+    padding: 0.5rem;
+    background-color: var(--color-terracotta);
     color: white;
     font-size: 1.2rem;
     border-radius: 0.8rem;
+    border: 2px solid var(--color-terracotta);
     text-align: center;
     margin-top: 1.5rem;
 }
 
+.numBtnGroup h4 {
+    width: 26px;
+    height: 26px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 .numBtnGroup button {
-    padding: 0.8rem 0.5rem;
+    padding: 0.5rem;
     background-color: #FFFFFF;
     color: #852121;
     border: 2px solid #852221;
@@ -297,8 +314,8 @@
     padding: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
-    border: 2px solid #E67139;
-    color: #E67139;
+    border: 2px solid var(--color-terracotta);
+    color: var(--color-terracotta);
     font-weight: 600;
     font-size: 1.2rem;
 }
@@ -310,6 +327,19 @@
 
 @media screen and (max-width: 600px) {
     .radioBtn {
+        width: 100%;
+    }
+
+    .buttonRow {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
+
+    .addPartecipantBtn {
         width: 100%;
     }
 
