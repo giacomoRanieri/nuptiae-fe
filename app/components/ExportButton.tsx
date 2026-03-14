@@ -2,8 +2,11 @@
 
 import { InvitationDto } from "@/lib/graphql/graphql";
 import { useState } from "react";
+import styles from "./ExportButton.module.css";
+import { useTranslations } from "next-intl";
 
 export function ExportButton({ invitations }: { invitations: InvitationDto[] }) {
+  const t = useTranslations("Admin.dashboard");
   const [isExporting, setIsExporting] = useState(false);
 
   const handleExport = () => {
@@ -49,18 +52,10 @@ export function ExportButton({ invitations }: { invitations: InvitationDto[] }) 
     <button
       onClick={handleExport}
       disabled={isExporting}
-      style={{
-        padding: "0.5rem 1rem",
-        backgroundColor: "#10B981",
-        color: "white",
-        border: "none",
-        borderRadius: "4px",
-        cursor: isExporting ? "not-allowed" : "pointer",
-        opacity: isExporting ? 0.7 : 1,
-        fontWeight: 500
-      }}
+      className={styles.exportBtn}
+      title={invitations.length === 0 ? t("noExport") : ""}
     >
-      {isExporting ? "Exporting..." : "Export Participants (CSV)"}
+      {isExporting ? t("exporting") : t("export")}
     </button>
   );
 }

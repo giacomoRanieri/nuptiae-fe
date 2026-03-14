@@ -3,14 +3,13 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: #f9fafb;
 }
 
 .formPanel {
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
@@ -19,7 +18,7 @@
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #111827;
+  color: var (--color-blue);
 }
 
 .errorBox {
@@ -43,7 +42,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
-  color: #374151;
+  color: var(--color-blue);
 }
 
 .input {
@@ -52,12 +51,14 @@
   border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: white;
+  color: var(--color-blue);
 }
 
 .submitBtn {
   width: 100%;
   padding: 0.75rem;
-  background: #111827;
+  background: var(--color-blue);
   color: white;
   border: none;
   border-radius: 4px;

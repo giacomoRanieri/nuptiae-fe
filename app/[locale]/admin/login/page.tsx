@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import styles from "./login.module.css";
 import { logger } from "@/lib/logger";
 
@@ -14,6 +15,7 @@ export default function AdminLoginPage() {
 
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,11 +36,11 @@ export default function AdminLoginPage() {
         router.push(`/${locale}/admin`);
       } else {
         const data = await res.json();
-        setError(data.message || "Login failed");
+        setError(data.message || t("Admin.login.error"));
       }
     } catch (err) {
       logger.error("Login failed", err);
-      setError("An unexpected error occurred");
+      setError(t("Admin.login.unexpectedError"));
     } finally {
       setIsLoading(false);
     }
@@ -47,13 +49,18 @@ export default function AdminLoginPage() {
   return (
     <div className={styles.container}>
       <form onSubmit={handleLogin} className={styles.formPanel}>
-        <h1 className={styles.title}>Admin Login</h1>
+        <h1 className={styles.title}>{t("Admin.login.title")}</h1>
 
         {error && <div className={styles.errorBox}>{error}</div>}
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>Username</label>
+          <label className={styles.label} htmlFor="username">
+            {t("Admin.login.username")}
+          </label>
           <input
+            id="username"
+            autoComplete="username"
+            name="username"
             type="text"
             required
             value={username}
@@ -63,8 +70,13 @@ export default function AdminLoginPage() {
         </div>
 
         <div className={styles.formGroupLast}>
-          <label className={styles.label}>Password</label>
+          <label className={styles.label} htmlFor="password">
+            {t("Admin.login.password")}
+          </label>
           <input
+            id="password"
+            autoComplete="current-password"
+            name="password"
             type="password"
             required
             value={password}
@@ -74,7 +86,7 @@ export default function AdminLoginPage() {
         </div>
 
         <button type="submit" disabled={isLoading} className={styles.submitBtn}>
-          {isLoading ? "Signing in..." : "Sign In"}
+          {isLoading ? t("Admin.login.signingIn") : t("Admin.login.submit")}
         </button>
       </form>
     </div>

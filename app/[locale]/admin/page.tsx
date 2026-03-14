@@ -9,6 +9,7 @@ import {
 } from "@/lib/graphql/graphql";
 import styles from "./page.module.css";
 import { ExportButton } from "@/app/components/ExportButton";
+import { getTranslations } from "next-intl/server";
 
 const GET_ALL_INVITATIONS = gql(`
   query GetAllInvitations {
@@ -31,6 +32,9 @@ const GET_ALL_INVITATIONS = gql(`
 `);
 
 export default async function AdminDashboardPage() {
+  const t = await getTranslations("Admin.dashboard");
+  const t2 = await getTranslations("InvitationForm");
+
   let invitations: InvitationDto[] = [];
   try {
     const client = await getClient();
@@ -63,48 +67,42 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className={styles.dashboard}>
-      <h2 className={styles.title}>Dashboard - Invitations</h2>
+      <h2 className={styles.title}>{t("titleInvitations")}</h2>
 
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <div className={styles.statLabel}>Total Invitations</div>
+          <div className={styles.statLabel}>{t("totalInvitations")}</div>
           <div className={styles.statValue}>{totalInvitations}</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statLabel}>Confirmed</div>
-          <div className={styles.statValue} style={{ color: "#10B981" }}>
+          <div className={styles.statLabel}>{t("confirmed")}</div>
+          <div className={`${styles.statValue} ${styles.textGreen}`}>
             {confirmedInvitations}
           </div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statLabel}>Pending</div>
-          <div className={styles.statValue} style={{ color: "#F59E0B" }}>
+          <div className={styles.statLabel}>{t("pending")}</div>
+          <div className={`${styles.statValue} ${styles.textOrange}`}>
             {pendingInvitations}
           </div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statLabel}>Refused</div>
-          <div className={styles.statValue} style={{ color: "#EF4444" }}>
+          <div className={styles.statLabel}>{t("refused")}</div>
+          <div className={`${styles.statValue} ${styles.textRed}`}>
             {refusedInvitations}
           </div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statLabel}>Total Participants</div>
+          <div className={styles.statLabel}>{t("totalParticipants")}</div>
           <div className={styles.statValue}>{totalParticipants}</div>
-          <div
-            style={{
-              fontSize: "0.875rem",
-              color: "#6B7280",
-              marginTop: "0.25rem",
-            }}
-          >
-            ({confirmedParticipants} from confirmed)
+          <div className={styles.statSubtext}>
+            {t("fromConfirmed", { count: confirmedParticipants })}
           </div>
         </div>
       </div>
 
       <div className={styles.actionBar}>
-        <h3 style={{ margin: 0 }}>All Invitations</h3>
+        <h3 className={styles.actionBarTitle}>{t("allInvitations")}</h3>
         <ExportButton
           invitations={invitations.filter(
             (i) => i.confirmationStatus === ConfirmationStatus.Confirmed,
@@ -121,23 +119,21 @@ export default async function AdminDashboardPage() {
           >
             <div>
               <div className={styles.listRecipient}>{invitation.recipient}</div>
-              <div style={{ fontSize: "0.875rem", color: "#6B7280" }}>
-                {invitation.participants?.length || 0} participants
+              <div className={styles.listParticipantCount}>
+                {t("participantsCount", {
+                  count: invitation.participants?.length || 0,
+                })}
               </div>
             </div>
             <div
               className={`${styles.statusBadge} ${styles[`status${invitation.confirmationStatus}`]}`}
             >
-              {invitation.confirmationStatus}
+              {t2(invitation.confirmationStatus.toLocaleLowerCase())}
             </div>
           </Link>
         ))}
         {invitations.length === 0 && (
-          <div
-            style={{ padding: "2rem", textAlign: "center", color: "#6B7280" }}
-          >
-            No invitations found.
-          </div>
+          <div className={styles.emptyListMessage}>{t("noInvitations")}</div>
         )}
       </div>
 

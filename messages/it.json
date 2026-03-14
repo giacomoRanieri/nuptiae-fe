@@ -61,5 +61,38 @@
     "title": "Accesso non autorizzato",
     "description": "Si è verificato un errore durante l'accesso. Il link potrebbe essere non valido, scaduto, oppure non hai i permessi necessari per visualizzare questa pagina.",
     "backHome": "Torna alla Home"
+  },
+  "Admin": {
+    "login": {
+      "title": "Login",
+      "username": "Username",
+      "password": "Password",
+      "submit": "Accedi",
+      "error": "Errore durante l'accesso",
+      "signingIn": "Accesso in corso...",
+      "unexpectedError": "Si è verificato un errore imprevisto"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "titleInvitations": "Dashboard - Inviti",
+      "totalInvitations": "Totale inviti",
+      "confirmed": "Confermati",
+      "pending": "In attesa",
+      "refused": "Rifiutati",
+      "totalParticipants": "Totale partecipanti",
+      "fromConfirmed": "({count} da confermati)",
+      "allInvitations": "Tutti gli inviti",
+      "participantsCount": "{count} partecipanti",
+      "noInvitations": "Nessun invito trovato.",
+      "export": "Esporta Partecipanti (CSV)",
+      "exporting": "Esportazione...",
+      "noExport": "Nessun partecipante confermato da esportare",
+      "logout": "Logout"
+    },
+    "invitationDetail": {
+      "goBack": "Torna alla Dashboard",
+      "editTitle": "Modifica invito: {recipient}",
+      "errorLoading": "Errore nel caricamento dell'invito."
+    }
   }
 }

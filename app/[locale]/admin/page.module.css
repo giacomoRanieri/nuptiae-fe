@@ -2,12 +2,12 @@
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   margin-top: 0;
-  color: #111827;
+  color: var (--color-blue);
 }
 
 .text {
@@ -40,7 +40,7 @@
 .statValue {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #111827;
+  color: var (--color-blue);
 }
 
 .actionBar {
@@ -79,7 +79,7 @@
 
 .listRecipient {
   font-weight: 500;
-  color: #111827;
+  color: var (--color-blue);
   margin-bottom: 0.25rem;
 }
 
@@ -105,4 +105,37 @@
 .statusNOT_ATTENDING {
   background-color: #fee2e2;
   color: #991b1b;
+}
+
+.textGreen {
+  color: #10B981;
+}
+
+.textOrange {
+  color: #F59E0B;
+}
+
+.textRed {
+  color: #EF4444;
+}
+
+.statSubtext {
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin-top: 0.25rem;
+}
+
+.actionBarTitle {
+  margin: 0;
+}
+
+.listParticipantCount {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.emptyListMessage {
+  padding: 2rem;
+  text-align: center;
+  color: #6B7280;
 }
