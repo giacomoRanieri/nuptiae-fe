@@ -5,7 +5,7 @@ import OurStory from "@/app/components/OurStory";
 import WeddingDetails from "@/app/components/WeddingDetails";
 import WeddingList from "@/app/components/WeddingList";
 import Faq from "@/app/components/Faq";
-import { client } from "@/lib/sanity";
+import { client } from "@/lib/sanity/sanity";
 import styles from "./page.module.css";
 
 // Disable revalidation for now to ensure fresh data, or set revalidate time

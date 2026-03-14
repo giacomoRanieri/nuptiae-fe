@@ -1,6 +1,6 @@
-import { HeroData } from "../../lib/types";
+import { HeroData } from "../../lib/sanity/types";
 import Image from "next/image";
-import { urlFor } from "../../lib/sanity";
+import { urlFor } from "../../lib/sanity/sanity";
 import styles from "./Hero.module.css";
 import { useTranslations } from "next-intl";
 
@@ -50,17 +50,17 @@ export default function Hero({ data }: HeroProps) {
       <div className={styles.rightContainer}>
         <div className={styles.ringsIcon}>
           <div>
-            <Image src="/RingsHeart.svg" alt="Rings" fill/>
+            <Image src="/RingsHeart.svg" alt="Rings" fill />
           </div>
         </div>
         <div className={styles.blueIcon}>
           <div>
-            <Image src="/Castle.svg" alt="Castle" fill/>
+            <Image src="/Castle.svg" alt="Castle" fill />
           </div>
         </div>
         <div className={styles.orangeIcon}>
           <div>
-            <Image src="/Glasses.svg" alt="Cheers" fill/>
+            <Image src="/Glasses.svg" alt="Cheers" fill />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 {
   "name": "Node.js & TypeScript",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22-bookworm",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
@@ -64,11 +64,9 @@
         "naumovs.color-highlight",
         "oderwat.indent-rainbow",
         "pkief.material-icon-theme",
-        "pmneo.tsimporter",
         "pulkitgangwar.nextjs-snippets",
         "shardulm94.trailing-spaces",
         "shd101wyy.markdown-preview-enhanced",
-        "steoates.autoimport",
         "stringham.move-ts",
         "styled-components.vscode-styled-components",
         "usernamehw.errorlens",

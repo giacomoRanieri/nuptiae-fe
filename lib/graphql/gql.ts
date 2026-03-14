@@ -14,14 +14,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query GetInvitation($id: ID!) {\n    invitation(id: $id) {\n      _id\n      recipient\n      confirmationStatus\n      phoneNumber\n      email\n      isInterestedInAccommodation\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegetarian\n        vegan\n        intolerances\n      }\n    }\n  }\n": typeof types.GetInvitationDocument,
-    "\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n": typeof types.UpdateInvitationDocument,
-    "\n  mutation UpdateParticipants($id: ID!, $input: UpdateInvitationParticipantsInput!) {\n    updateInvitationParticipants(id: $id, input: $input) {\n        _id\n        participants {\n            _id\n            name\n            lastName\n            age\n            intolerances\n            celiac\n            vegetarian\n            vegan\n        }\n    }\n  }\n": typeof types.UpdateParticipantsDocument,
+  "\n  query GetInvitation($id: ID!) {\n    invitation(id: $id) {\n      _id\n      recipient\n      confirmationStatus\n      phoneNumber\n      email\n      isInterestedInAccommodation\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegetarian\n        vegan\n        intolerances\n      }\n    }\n  }\n": typeof types.GetInvitationDocument,
+  "\n  query GetAllInvitations {\n    invitations {\n      _id\n      recipient\n      confirmationStatus\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegan\n        vegetarian\n        intolerances\n      }\n    }\n  }\n": typeof types.GetAllInvitationsDocument,
+  "\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n": typeof types.UpdateInvitationDocument,
+  "\n  mutation UpdateParticipants($id: ID!, $input: UpdateInvitationParticipantsInput!) {\n    updateInvitationParticipants(id: $id, input: $input) {\n        _id\n        participants {\n            _id\n            name\n            lastName\n            age\n            intolerances\n            celiac\n            vegetarian\n            vegan\n        }\n    }\n  }\n": typeof types.UpdateParticipantsDocument,
 };
 const documents: Documents = {
-    "\n  query GetInvitation($id: ID!) {\n    invitation(id: $id) {\n      _id\n      recipient\n      confirmationStatus\n      phoneNumber\n      email\n      isInterestedInAccommodation\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegetarian\n        vegan\n        intolerances\n      }\n    }\n  }\n": types.GetInvitationDocument,
-    "\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n": types.UpdateInvitationDocument,
-    "\n  mutation UpdateParticipants($id: ID!, $input: UpdateInvitationParticipantsInput!) {\n    updateInvitationParticipants(id: $id, input: $input) {\n        _id\n        participants {\n            _id\n            name\n            lastName\n            age\n            intolerances\n            celiac\n            vegetarian\n            vegan\n        }\n    }\n  }\n": types.UpdateParticipantsDocument,
+  "\n  query GetInvitation($id: ID!) {\n    invitation(id: $id) {\n      _id\n      recipient\n      confirmationStatus\n      phoneNumber\n      email\n      isInterestedInAccommodation\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegetarian\n        vegan\n        intolerances\n      }\n    }\n  }\n": types.GetInvitationDocument,
+  "\n  query GetAllInvitations {\n    invitations {\n      _id\n      recipient\n      confirmationStatus\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegan\n        vegetarian\n        intolerances\n      }\n    }\n  }\n": types.GetAllInvitationsDocument,
+  "\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n": types.UpdateInvitationDocument,
+  "\n  mutation UpdateParticipants($id: ID!, $input: UpdateInvitationParticipantsInput!) {\n    updateInvitationParticipants(id: $id, input: $input) {\n        _id\n        participants {\n            _id\n            name\n            lastName\n            age\n            intolerances\n            celiac\n            vegetarian\n            vegan\n        }\n    }\n  }\n": types.UpdateParticipantsDocument,
 };
 
 /**
@@ -45,6 +47,10 @@ export function gql(source: "\n  query GetInvitation($id: ID!) {\n    invitation
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  query GetAllInvitations {\n    invitations {\n      _id\n      recipient\n      confirmationStatus\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegan\n        vegetarian\n        intolerances\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetAllInvitations {\n    invitations {\n      _id\n      recipient\n      confirmationStatus\n      participants {\n        _id\n        name\n        lastName\n        age\n        celiac\n        vegan\n        vegetarian\n        intolerances\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateInvitation($id: ID!, $input: UpdateInvitationInput!) {\n    updateInvitation(id: $id, input: $input) {\n      _id\n      confirmationStatus\n      email\n      phoneNumber\n      isInterestedInAccommodation\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -55,4 +61,4 @@ export function gql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

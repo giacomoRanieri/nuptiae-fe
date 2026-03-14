@@ -11,8 +11,8 @@ import {
   ParticipantDto,
 } from "@/lib/graphql/graphql";
 import { logger } from "@/lib/logger";
-import { urlFor } from "@/lib/sanity";
-import { ParticipantPageData } from "@/lib/types";
+import { urlFor } from "@/lib/sanity/sanity";
+import { ParticipantPageData } from "@/lib/sanity/types";
 import { Trash, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PortableText } from "next-sanity";
