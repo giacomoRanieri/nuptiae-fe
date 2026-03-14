@@ -3,12 +3,26 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { routing } from './app/i18n';
 import { logger } from './lib/logger';
+import { jwtVerify } from 'jose';
+import { JwtPayload } from './lib/models/jwt';
 
 const intlMiddleware = createMiddleware(routing);
 
 export default async function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
-  const accessToken = request.cookies.get('at')?.value;
+  let accessToken = request.cookies.get('at')?.value;
+  let payload: JwtPayload | null = null;
+  if (accessToken) {
+    try {
+      payload = (await jwtVerify(accessToken, new TextEncoder().encode(process.env.JWT_SIGN_KEY))).payload as JwtPayload;
+    } catch (e) {
+      logger.error("Middleware failed to parse access token", e);
+      accessToken = undefined;
+    }
+  }
+
+  // Extract path parts
+  const parts = pathname.split('/');
 
   // Only intercept requests to the participant page that include a token
   if (pathname.includes('/participant/') && !accessToken) {
@@ -16,7 +30,6 @@ export default async function middleware(request: NextRequest) {
 
     // Extract participantId from path (roughly) or pass it if needed.
     // pathname: /en/participant/123
-    const parts = pathname.split('/');
     const participantIndex = parts.indexOf('participant');
 
     if (participantIndex !== -1 && parts[participantIndex + 1]) {
