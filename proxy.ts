@@ -24,6 +24,27 @@ export default async function middleware(request: NextRequest) {
   // Extract path parts
   const parts = pathname.split('/');
 
+  // Admin route protection
+  if (pathname.includes('/admin') && !pathname.includes('/admin/login')) {
+    let isAdmin = false;
+
+    if (accessToken) {
+
+      if (payload?.roles?.includes('admin')) {
+        isAdmin = true;
+      } else {
+        logger.warn("User is not admin", payload);
+      }
+    }
+
+    if (!isAdmin) {
+      const loginUrl = request.nextUrl.clone();
+      const locale = parts[1] || 'it'; // Assuming default or found locale
+      loginUrl.pathname = `/${locale}/admin/login`;
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   // Only intercept requests to the participant page that include a token
   if (pathname.includes('/participant/') && !accessToken) {
     const token = searchParams.get('token');
