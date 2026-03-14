@@ -3,9 +3,15 @@
 import { LogOut } from "lucide-react";
 import styles from "./LogOutButton.module.css";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 export function LogOutButton() {
   const t = useTranslations();
+  const pathname = usePathname();
+
+  if (pathname.includes("/admin/login")) {
+    return null;
+  }
 
   const handleLogout = async () => {
     try {
