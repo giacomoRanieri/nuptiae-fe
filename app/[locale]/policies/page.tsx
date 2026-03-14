@@ -1,7 +1,7 @@
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { client } from "@/lib/sanity";
-import { PoliciesData } from "@/lib/types";
+import { client } from "@/lib/sanity/sanity";
+import { PoliciesData } from "@/lib/sanity/types";
 import { PortableText } from "next-sanity";
 import styles from "./page.module.css";
 
