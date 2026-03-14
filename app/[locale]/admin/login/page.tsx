@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import styles from "./login.module.css";
+import { logger } from "@/lib/logger";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -36,6 +37,7 @@ export default function AdminLoginPage() {
         setError(data.message || "Login failed");
       }
     } catch (err) {
+      logger.error("Login failed", err);
       setError("An unexpected error occurred");
     } finally {
       setIsLoading(false);
@@ -45,20 +47,12 @@ export default function AdminLoginPage() {
   return (
     <div className={styles.container}>
       <form onSubmit={handleLogin} className={styles.formPanel}>
-        <h1 className={styles.title}>
-          Admin Login
-        </h1>
+        <h1 className={styles.title}>Admin Login</h1>
 
-        {error && (
-          <div className={styles.errorBox}>
-            {error}
-          </div>
-        )}
+        {error && <div className={styles.errorBox}>{error}</div>}
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>
-            Username
-          </label>
+          <label className={styles.label}>Username</label>
           <input
             type="text"
             required
@@ -69,9 +63,7 @@ export default function AdminLoginPage() {
         </div>
 
         <div className={styles.formGroupLast}>
-          <label className={styles.label}>
-            Password
-          </label>
+          <label className={styles.label}>Password</label>
           <input
             type="password"
             required
@@ -81,11 +73,7 @@ export default function AdminLoginPage() {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={styles.submitBtn}
-        >
+        <button type="submit" disabled={isLoading} className={styles.submitBtn}>
           {isLoading ? "Signing in..." : "Sign In"}
         </button>
       </form>
