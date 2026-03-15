@@ -3,8 +3,8 @@
 import { logger } from "@/lib/logger";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
-import { urlFor } from "../../lib/sanity";
-import { WeddingListData } from "../../lib/types";
+import { urlFor } from "../../lib/sanity/sanity";
+import { WeddingListData } from "../../lib/sanity/types";
 import styles from "./WeddingList.module.css";
 
 interface WeddingListProps {

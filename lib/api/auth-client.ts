@@ -5,7 +5,7 @@ export interface LoginResponse {
 
 export interface AuthClient {
     login(guestId: string, token: string): Promise<Response>;
-    adminLogin(password: string): Promise<Response>; // Simplified for now based on needs
+    adminLogin(username: string, password: string): Promise<Response>;
     refresh(): Promise<Response>;
 }
 
@@ -22,14 +22,13 @@ export const authClient: AuthClient = {
         });
     },
 
-    adminLogin: async (password: string) => {
-        // Current requirement doesn't fully specify admin flow but adding stub
+    adminLogin: async (username: string, password: string) => {
         return fetch(`${BASE_URL}/auth/admin/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ password }),
+            body: JSON.stringify({ username, password }),
         });
     },
 

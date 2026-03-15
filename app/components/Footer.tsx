@@ -1,7 +1,7 @@
 import styles from "./Footer.module.css";
 import Image from "next/image";
 import { Link } from "@/app/i18n";
-import { client } from "@/lib/sanity";
+import { client } from "@/lib/sanity/sanity";
 import { getTranslations } from "next-intl/server";
 import { Countdown } from "./Countdown";
 

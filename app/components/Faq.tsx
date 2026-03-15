@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaqData } from "../../lib/types";
+import { FaqData } from "../../lib/sanity/types";
 import { Plus, Minus } from "lucide-react";
 import styles from "./Faq.module.css";
 interface FaqProps {

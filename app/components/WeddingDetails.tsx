@@ -1,8 +1,8 @@
 "use client";
 
-import { EventDetails } from "../../lib/types";
+import { EventDetails } from "../../lib/sanity/types";
 import Image from "next/image";
-import { urlFor } from "../../lib/sanity";
+import { urlFor } from "../../lib/sanity/sanity";
 import styles from "./WeddingDetails.module.css";
 import { Calendar, Map, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
