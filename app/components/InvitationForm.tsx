@@ -480,7 +480,11 @@ export function InvitationForm({ invitation, pageData }: Props) {
         message={pageData?.willAttend?.successDialog?.message}
         close={pageData?.willAttend?.successDialog?.close}
         isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
+        onClose={() => {
+          setShowSuccessModal(false);
+          window.location.href="/";
+        }
+      }
       />
     </form>
   );
