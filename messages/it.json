@@ -34,7 +34,7 @@
     },
     "confirmationStatus": "Ci sarai al matrimonio?",
     "confirmed": "Confermato",
-    "notAttending": "Non parteciperà",
+    "not_attending": "Non parteciperà",
     "pending": "In attesa",
     "email": "Email",
     "phoneNumber": "Numero di telefono",
