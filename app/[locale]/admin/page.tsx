@@ -1,14 +1,14 @@
 import { TokenRefresher } from "@/app/components/TokenRefresher";
-import { Link } from "@/app/i18n";
 import { getClient } from "@/lib/api/graphql-client";
 import { gql } from "@/lib/graphql";
 import {
   ConfirmationStatus,
   InvitationDto,
   Query,
+  Age,
 } from "@/lib/graphql/graphql";
 import styles from "./page.module.css";
-import { ExportButton } from "@/app/components/ExportButton";
+import { AdminListClient } from "@/app/components/AdminListClient";
 import { getTranslations } from "next-intl/server";
 
 const GET_ALL_INVITATIONS = gql(`
@@ -17,6 +17,7 @@ const GET_ALL_INVITATIONS = gql(`
       _id
       recipient
       confirmationStatus
+      isInterestedInAccommodation
       participants {
         _id
         name
@@ -65,6 +66,16 @@ export default async function AdminDashboardPage() {
     .filter((i) => i.confirmationStatus === ConfirmationStatus.Confirmed)
     .reduce((acc, curr) => acc + (curr.participants?.length || 0), 0);
 
+  const totalChildren = invitations.reduce(
+    (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Child).length || 0),
+    0
+  );
+  
+  const totalInfants = invitations.reduce(
+    (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Infant).length || 0),
+    0
+  );
+
   return (
     <div className={styles.dashboard}>
       <h2 className={styles.title}>{t("titleInvitations")}</h2>
@@ -99,43 +110,17 @@ export default async function AdminDashboardPage() {
             {t("fromConfirmed", { count: confirmedParticipants })}
           </div>
         </div>
+        <div className={styles.statCard}>
+          <div className={styles.statLabel}>{t("totalChildren")}</div>
+          <div className={styles.statValue}>{totalChildren}</div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statLabel}>{t("totalInfants")}</div>
+          <div className={styles.statValue}>{totalInfants}</div>
+        </div>
       </div>
 
-      <div className={styles.actionBar}>
-        <h3 className={styles.actionBarTitle}>{t("allInvitations")}</h3>
-        <ExportButton
-          invitations={invitations.filter(
-            (i) => i.confirmationStatus === ConfirmationStatus.Confirmed,
-          )}
-        />
-      </div>
-
-      <div className={styles.listContainer}>
-        {invitations.map((invitation) => (
-          <Link
-            href={`/admin/invitation/${invitation._id}`}
-            key={invitation._id}
-            className={styles.listItem}
-          >
-            <div>
-              <div className={styles.listRecipient}>{invitation.recipient}</div>
-              <div className={styles.listParticipantCount}>
-                {t("participantsCount", {
-                  count: invitation.participants?.length || 0,
-                })}
-              </div>
-            </div>
-            <div
-              className={`${styles.statusBadge} ${styles[`status${invitation.confirmationStatus}`]}`}
-            >
-              {t2(invitation.confirmationStatus.toLocaleLowerCase())}
-            </div>
-          </Link>
-        ))}
-        {invitations.length === 0 && (
-          <div className={styles.emptyListMessage}>{t("noInvitations")}</div>
-        )}
-      </div>
+      <AdminListClient invitations={invitations} />
 
       <TokenRefresher />
     </div>
