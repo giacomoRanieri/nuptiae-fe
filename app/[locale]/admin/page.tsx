@@ -16,6 +16,7 @@ const GET_ALL_INVITATIONS = gql(`
     invitations {
       _id
       recipient
+      secret
       confirmationStatus
       isInterestedInAccommodation
       participants {
@@ -70,7 +71,7 @@ export default async function AdminDashboardPage() {
     (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Child).length || 0),
     0
   );
-  
+
   const totalInfants = invitations.reduce(
     (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Infant).length || 0),
     0
