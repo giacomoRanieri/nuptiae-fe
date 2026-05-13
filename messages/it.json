@@ -101,7 +101,9 @@
       "all": "Tutti",
       "yes": "Sì",
       "no": "No",
-      "linkCopied": "Link copiato negli appunti!"
+      "linkCopied": "Link copiato negli appunti!",
+      "linkCopiedTitle": "Link copiato",
+      "close": "Chiudi"
     },
     "invitationDetail": {
       "goBack": "Torna alla Dashboard",
