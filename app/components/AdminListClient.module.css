@@ -48,3 +48,27 @@
   border-radius: 9999px;
   font-weight: 500;
 }
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.shareButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.shareButton:hover {
+  background-color: #f3f4f6;
+  color: var(--color-blue, #2563eb);
+}

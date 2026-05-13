@@ -2,20 +2,24 @@
 
 import { useState, useMemo } from "react";
 import { Link } from "@/app/i18n";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ConfirmationStatus, InvitationDto } from "@/lib/graphql/graphql";
 import { ExportButton } from "./ExportButton";
+import { SuccessModal } from "./SuccessModal";
 import pageStyles from "../[locale]/admin/page.module.css";
 import filterStyles from "./AdminListClient.module.css";
+import { Share2 } from "lucide-react";
 
 export function AdminListClient({ invitations }: { invitations: InvitationDto[] }) {
   const t = useTranslations("Admin.dashboard");
   const t2 = useTranslations("InvitationForm");
+  const locale = useLocale();
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [accommodationFilter, setAccommodationFilter] = useState("ALL");
   const [sortBy, setSortBy] = useState("NAME"); // NAME, STATUS, ACCOMMODATION
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredAndSorted = useMemo(() => {
     return invitations
@@ -62,6 +66,23 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
         }
       });
   }, [invitations, search, statusFilter, accommodationFilter, sortBy]);
+
+  const handleShare = async (e: React.MouseEvent, invitation: InvitationDto) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const url = new URL(`${window.location.origin}/${locale}/participant/${invitation._id}`);
+    if (invitation.secret) {
+      url.searchParams.set('token', invitation.secret);
+    }
+    
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error("Failed to copy link: ", err);
+    }
+  };
 
   return (
     <>
@@ -147,10 +168,19 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
                 </div>
               )}
             </div>
-            <div
-              className={`${pageStyles.statusBadge} ${pageStyles[`status${invitation.confirmationStatus}`]}`}
-            >
-              {t2(invitation.confirmationStatus.toLocaleLowerCase())}
+            <div className={filterStyles.actionsGroup}>
+              <div
+                className={`${pageStyles.statusBadge} ${pageStyles[`status${invitation.confirmationStatus}`]}`}
+              >
+                {t2(invitation.confirmationStatus.toLocaleLowerCase())}
+              </div>
+              <button 
+                className={filterStyles.shareButton}
+                onClick={(e) => handleShare(e, invitation)}
+                title={t("shareLink") || "Share link"}
+              >
+                <Share2 size={20} />
+              </button>
             </div>
           </Link>
         ))}
@@ -158,6 +188,25 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
           <div className={pageStyles.emptyListMessage}>{t("noInvitations")}</div>
         )}
       </div>
+      <SuccessModal
+        title={t("linkCopiedTitle") || "Success"}
+        message={[
+          {
+            _type: 'block',
+            _key: 'link-copied-block',
+            children: [
+              {
+                _type: 'span',
+                _key: 'link-copied-span',
+                text: t("linkCopied") || "Link copied to clipboard!",
+              },
+            ],
+          },
+        ]}
+        close={t("close") || "Close"}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }

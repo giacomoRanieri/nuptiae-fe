@@ -100,7 +100,10 @@
       "filterAccommodation": "Alloggio",
       "all": "Tutti",
       "yes": "Sì",
-      "no": "No"
+      "no": "No",
+      "linkCopied": "Link copiato negli appunti!",
+      "linkCopiedTitle": "Link copiato",
+      "close": "Chiudi"
     },
     "invitationDetail": {
       "goBack": "Torna alla Dashboard",
