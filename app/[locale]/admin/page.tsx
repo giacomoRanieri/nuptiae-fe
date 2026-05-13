@@ -35,7 +35,6 @@ const GET_ALL_INVITATIONS = gql(`
 
 export default async function AdminDashboardPage() {
   const t = await getTranslations("Admin.dashboard");
-  const t2 = await getTranslations("InvitationForm");
 
   let invitations: InvitationDto[] = [];
   try {
@@ -68,13 +67,16 @@ export default async function AdminDashboardPage() {
     .reduce((acc, curr) => acc + (curr.participants?.length || 0), 0);
 
   const totalChildren = invitations.reduce(
-    (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Child).length || 0),
-    0
+    (acc, curr) =>
+      acc + (curr.participants?.filter((p) => p.age === Age.Child).length || 0),
+    0,
   );
 
   const totalInfants = invitations.reduce(
-    (acc, curr) => acc + (curr.participants?.filter((p) => p.age === Age.Infant).length || 0),
-    0
+    (acc, curr) =>
+      acc +
+      (curr.participants?.filter((p) => p.age === Age.Infant).length || 0),
+    0,
   );
 
   return (

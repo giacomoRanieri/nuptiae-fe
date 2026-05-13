@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import styles from "./SuccessModal.module.css";
 import { X } from "lucide-react";
 import { PortableText } from "next-sanity";
-import { TypedObject } from "@portabletext/types";
+import { ArbitraryTypedObject } from "@portabletext/types";
 
 interface Props {
   title: string | undefined;
-  message: TypedObject | TypedObject[] | undefined;
+  message: ArbitraryTypedObject | ArbitraryTypedObject[] | undefined;
   close: string | undefined;
   isOpen: boolean;
   onClose: () => void;

@@ -5,6 +5,7 @@ import { Link } from "@/app/i18n";
 import { useTranslations, useLocale } from "next-intl";
 import { ConfirmationStatus, InvitationDto } from "@/lib/graphql/graphql";
 import { ExportButton } from "./ExportButton";
+import { SuccessModal } from "./SuccessModal";
 import pageStyles from "../[locale]/admin/page.module.css";
 import filterStyles from "./AdminListClient.module.css";
 import { Share2 } from "lucide-react";
@@ -18,6 +19,7 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [accommodationFilter, setAccommodationFilter] = useState("ALL");
   const [sortBy, setSortBy] = useState("NAME"); // NAME, STATUS, ACCOMMODATION
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredAndSorted = useMemo(() => {
     return invitations
@@ -76,7 +78,7 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
     
     try {
       await navigator.clipboard.writeText(url.toString());
-      alert(t("linkCopied") || "Link copied to clipboard!");
+      setIsModalOpen(true);
     } catch (err) {
       console.error("Failed to copy link: ", err);
     }
@@ -186,6 +188,25 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
           <div className={pageStyles.emptyListMessage}>{t("noInvitations")}</div>
         )}
       </div>
+      <SuccessModal
+        title={t("linkCopiedTitle") || "Success"}
+        message={[
+          {
+            _type: 'block',
+            _key: 'link-copied-block',
+            children: [
+              {
+                _type: 'span',
+                _key: 'link-copied-span',
+                text: t("linkCopied") || "Link copied to clipboard!",
+              },
+            ],
+          },
+        ]}
+        close={t("close") || "Close"}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }
