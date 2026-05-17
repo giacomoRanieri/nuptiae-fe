@@ -54,7 +54,7 @@
 
 .dateBadge {
     position: absolute;
-    left: 525px;
+    right: 1rem;
     bottom: 1rem;
     z-index: 4;
     background: white;
@@ -154,10 +154,12 @@
         padding: 1rem;
         align-items: center;
     }
+
     .dateCard {
         border-radius: 10px;
         height: 182px;
     }
+
     .fgImage {
         top: 25px;
         left: 25px;
@@ -166,14 +168,17 @@
         border-radius: 10px;
         border-width: 2px;
     }
+
     .ringsOverlay {
         top: 30px;
         left: 160px;
     }
+
     .ringsOverlay img {
         width: 32px;
         height: 28px;
     }
+
     .saveTheDate {
         font-size: 2.5rem;
         font-weight: 600;
@@ -181,28 +186,36 @@
         top: 25px;
         left: 210px;
     }
+
     .dateBadge {
-        left: 160px;
         font-size: 1rem;
         bottom: 0.5rem;
+        right: 0.5rem;
         padding: 0 1rem;
     }
+
     .locationImageWrapper {
         display: none;
     }
+
     .locationBadge {
         font-size: 1.5rem;
     }
+
     .addressRow {
         font-size: 1rem;
         justify-content: center;
     }
-    .addressRow > svg {
-        width:28px; height: 28px;
+
+    .addressRow>svg {
+        width: 28px;
+        height: 28px;
     }
+
     .buttons {
         flex-direction: column;
     }
+
     .locationInfo {
         align-items: center;
     }
