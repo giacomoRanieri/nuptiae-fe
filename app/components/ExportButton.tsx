@@ -13,7 +13,7 @@ export function ExportButton({ invitations }: { invitations: InvitationDto[] }) 
     setIsExporting(true);
     try {
       // CSV Header
-      let csvContent = "Invitation Recipient,Participant First Name,Participant Last Name,Age,Celiac,Vegetarian,Vegan,Intolerances\n";
+      let csvContent = "Invitation Recipient,Participant First Name,Participant Last Name,Age,Celiac,Vegetarian,Vegan,Intolerances,Needs Accommodation\n";
 
       invitations.forEach((invitation) => {
         if (!invitation.participants) return;
@@ -27,13 +27,14 @@ export function ExportButton({ invitations }: { invitations: InvitationDto[] }) 
             p.celiac ? "Yes" : "No",
             p.vegetarian ? "Yes" : "No",
             p.vegan ? "Yes" : "No",
-            `"${p.intolerances || ""}"`
+            `"${p.intolerances || ""}"`,
+            invitation.isInterestedInAccommodation ? "Yes" : "No"
           ].join(",");
           csvContent += row + "\n";
         });
       });
 
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const blob = new Blob(["\uFEFF", csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
