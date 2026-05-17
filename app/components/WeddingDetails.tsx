@@ -90,11 +90,7 @@ export default function WeddingDetails({ data }: WeddingDetailsProps) {
         <h2 className={styles.saveTheDate}>{t("saveTheDate")}</h2>
         {data.date && (
           <p className={styles.dateBadge}>
-            {new Date(data.date).toLocaleDateString("it-IT", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
+            {t("eventDate", { date: new Date(data.date) })}
           </p>
         )}
       </div>
