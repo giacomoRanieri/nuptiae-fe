@@ -16,7 +16,7 @@
     "@sanity/image-url": "^2.0.3",
     "@vercel/speed-insights": "^2.0.0",
     "cookie": "^1.1.1",
-    "graphql": "^16.13.1",
+    "graphql": "^16.14.0",
     "jose": "^6.2.1",
     "lucide-react": "^0.577.0",
     "next": "^16.1.6",
