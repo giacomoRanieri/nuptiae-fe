@@ -3,11 +3,12 @@
 import { LogOut } from "lucide-react";
 import styles from "./LogOutButton.module.css";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export function LogOutButton() {
   const t = useTranslations();
   const pathname = usePathname();
+  const router = useRouter();
 
   if (pathname.includes("/admin/login")) {
     return null;
@@ -19,7 +20,8 @@ export function LogOutButton() {
         method: "POST",
       });
       // Redirect to login page and refresh state
-      window.location.href = "/admin/login";
+      router.push("/admin/login");
+      router.refresh();
     } catch (err) {
       console.error("Logout failed:", err);
     }

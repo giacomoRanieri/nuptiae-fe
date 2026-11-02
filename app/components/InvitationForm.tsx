@@ -17,6 +17,7 @@ import { Trash, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   useTransition,
   useEffect,
@@ -48,6 +49,7 @@ const emptyParticipant: Partial<ParticipantDto> = {
 
 export function InvitationForm({ invitation, pageData }: Props) {
   const t = useTranslations("InvitationForm");
+  const router = useRouter();
   const [state, setState] = useState<InvitationFormState>(initialState);
   const [isPending, startTransitionHook] = useTransition();
 
@@ -82,15 +84,23 @@ export function InvitationForm({ invitation, pageData }: Props) {
   }
 
   const formAction = (formData: FormData) => {
+    const submittedStatus =
+      (formData.get("status") as ConfirmationStatus) || status;
     startTransitionHook(async () => {
       try {
         const result = await updateInvitationAction(state, formData);
         setState(result);
         if (result.message) {
-          if (!result.success || status !== ConfirmationStatus.Confirmed) {
+          if (
+            !result.success ||
+            submittedStatus !== ConfirmationStatus.Confirmed
+          ) {
             setIsVisible(true);
           }
-          if (result.success && status === ConfirmationStatus.Confirmed) {
+          if (
+            result.success &&
+            submittedStatus === ConfirmationStatus.Confirmed
+          ) {
             setShowSuccessModal(true);
           }
         }
@@ -468,9 +478,8 @@ export function InvitationForm({ invitation, pageData }: Props) {
         isOpen={showSuccessModal}
         onClose={() => {
           setShowSuccessModal(false);
-          window.location.href="/";
-        }
-      }
+          router.push("/");
+        }}
       />
     </form>
   );
