@@ -3,6 +3,7 @@
 import {
   Age,
   ConfirmationStatus,
+  InvitationDto,
   UpdateInvitationInput,
 } from "@/lib/models/invitation";
 import { logger } from "@/lib/logger";
@@ -14,6 +15,37 @@ export interface InvitationFormState {
   message?: string;
   success?: boolean;
   timestamp?: number;
+}
+
+export interface CreateInvitationResult {
+  success: boolean;
+  invitation?: InvitationDto;
+  message?: string;
+}
+
+export async function createInvitationAction(
+  recipient: string
+): Promise<CreateInvitationResult> {
+  const trimmed = recipient?.trim();
+  if (!trimmed) {
+    return { success: false, message: "createError" };
+  }
+
+  try {
+    const user = await authService.getAuthenticatedUser();
+    const invitation = await invitationsService.create(
+      { recipient: trimmed },
+      user
+    );
+
+    revalidatePath("/admin");
+    revalidatePath("/[locale]/admin", "page");
+
+    return { success: true, invitation };
+  } catch (error) {
+    logger.error("Create invitation failed:", error);
+    return { success: false, message: "createError" };
+  }
 }
 
 export async function updateInvitationAction(

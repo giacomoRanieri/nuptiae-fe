@@ -1,25 +1,33 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Link } from "@/app/i18n";
 import { useTranslations, useLocale } from "next-intl";
 import { ConfirmationStatus, InvitationDto } from "@/lib/models/invitation";
+import { createInvitationAction } from "@/app/actions/invitation";
 import { ExportButton } from "./ExportButton";
 import { SuccessModal } from "./SuccessModal";
 import pageStyles from "../[locale]/admin/page.module.css";
 import filterStyles from "./AdminListClient.module.css";
-import { Share2 } from "lucide-react";
+import { Plus, Share2, X } from "lucide-react";
 
 export function AdminListClient({ invitations }: { invitations: InvitationDto[] }) {
   const t = useTranslations("Admin.dashboard");
   const t2 = useTranslations("InvitationForm");
   const locale = useLocale();
+  const router = useRouter();
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [accommodationFilter, setAccommodationFilter] = useState("ALL");
   const [sortBy, setSortBy] = useState("NAME"); // NAME, STATUS, ACCOMMODATION
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newRecipient, setNewRecipient] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+  const [createError, setCreateError] = useState("");
 
   const filteredAndSorted = useMemo(() => {
     return invitations
@@ -70,12 +78,12 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
   const handleShare = async (e: React.MouseEvent, invitation: InvitationDto) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const url = new URL(`${window.location.origin}/${locale}/participant/${invitation._id}`);
     if (invitation.secret) {
-      url.searchParams.set('token', invitation.secret);
+      url.searchParams.set("token", invitation.secret);
     }
-    
+
     try {
       await navigator.clipboard.writeText(url.toString());
       setIsModalOpen(true);
@@ -84,15 +92,51 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
     }
   };
 
+  const handleCreateInvitation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newRecipient.trim()) return;
+
+    setIsCreating(true);
+    setCreateError("");
+    try {
+      const result = await createInvitationAction(newRecipient);
+      if (result.success) {
+        setNewRecipient("");
+        setIsCreateModalOpen(false);
+        router.refresh();
+      } else {
+        setCreateError(t("createError"));
+      }
+    } catch {
+      setCreateError(t("createError"));
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
   return (
     <>
       <div className={pageStyles.actionBar}>
         <h3 className={pageStyles.actionBarTitle}>{t("allInvitations")}</h3>
-        <ExportButton
-          invitations={filteredAndSorted.filter(
-            (i) => i.confirmationStatus === ConfirmationStatus.Confirmed
-          )}
-        />
+        <div className={filterStyles.actionButtons}>
+          <button
+            type="button"
+            className={filterStyles.createBtn}
+            onClick={() => {
+              setCreateError("");
+              setNewRecipient("");
+              setIsCreateModalOpen(true);
+            }}
+          >
+            <Plus size={16} />
+            {t("createInvitation")}
+          </button>
+          <ExportButton
+            invitations={filteredAndSorted.filter(
+              (i) => i.confirmationStatus === ConfirmationStatus.Confirmed
+            )}
+          />
+        </div>
       </div>
 
       <div className={filterStyles.filterBar}>
@@ -174,7 +218,7 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
               >
                 {t2(invitation.confirmationStatus.toLocaleLowerCase())}
               </div>
-              <button 
+              <button
                 className={filterStyles.shareButton}
                 onClick={(e) => handleShare(e, invitation)}
                 title={t("shareLink") || "Share link"}
@@ -188,16 +232,80 @@ export function AdminListClient({ invitations }: { invitations: InvitationDto[] 
           <div className={pageStyles.emptyListMessage}>{t("noInvitations")}</div>
         )}
       </div>
+
+      {isCreateModalOpen && (
+        <div
+          className={filterStyles.modalOverlay}
+          onClick={() => !isCreating && setIsCreateModalOpen(false)}
+        >
+          <div
+            className={filterStyles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={filterStyles.modalHeader}>
+              <h3 className={filterStyles.modalTitle}>
+                {t("createInvitationTitle")}
+              </h3>
+              <button
+                type="button"
+                className={filterStyles.modalCloseBtn}
+                onClick={() => setIsCreateModalOpen(false)}
+                disabled={isCreating}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateInvitation}>
+              {createError && (
+                <div className={filterStyles.errorBox}>{createError}</div>
+              )}
+              <div className={filterStyles.filterGroup}>
+                <label htmlFor="recipient-input">{t("recipientLabel")}</label>
+                <input
+                  id="recipient-input"
+                  type="text"
+                  required
+                  autoFocus
+                  className={filterStyles.input}
+                  placeholder={t("recipientPlaceholder")}
+                  value={newRecipient}
+                  onChange={(e) => setNewRecipient(e.target.value)}
+                  disabled={isCreating}
+                />
+              </div>
+              <div className={filterStyles.modalFooter}>
+                <button
+                  type="button"
+                  className={filterStyles.cancelBtn}
+                  onClick={() => setIsCreateModalOpen(false)}
+                  disabled={isCreating}
+                >
+                  {t("cancel")}
+                </button>
+                <button
+                  type="submit"
+                  className={filterStyles.createBtn}
+                  disabled={isCreating || !newRecipient.trim()}
+                >
+                  {isCreating ? t("creating") : t("createConfirm")}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <SuccessModal
         title={t("linkCopiedTitle") || "Success"}
         message={[
           {
-            _type: 'block',
-            _key: 'link-copied-block',
+            _type: "block",
+            _key: "link-copied-block",
             children: [
               {
-                _type: 'span',
-                _key: 'link-copied-span',
+                _type: "span",
+                _key: "link-copied-span",
                 text: t("linkCopied") || "Link copied to clipboard!",
               },
             ],
