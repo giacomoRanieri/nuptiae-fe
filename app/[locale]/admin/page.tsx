@@ -1,48 +1,22 @@
 import { TokenRefresher } from "@/app/components/TokenRefresher";
-import { getClient } from "@/lib/api/graphql-client";
-import { gql } from "@/lib/graphql";
 import {
   ConfirmationStatus,
   InvitationDto,
-  Query,
   Age,
-} from "@/lib/graphql/graphql";
+} from "@/lib/models/invitation";
+import { authService } from "@/lib/server/services/auth.service";
+import { invitationsService } from "@/lib/server/services/invitations.service";
 import styles from "./page.module.css";
 import { AdminListClient } from "@/app/components/AdminListClient";
 import { getTranslations } from "next-intl/server";
-
-const GET_ALL_INVITATIONS = gql(`
-  query GetAllInvitations {
-    invitations {
-      _id
-      recipient
-      secret
-      confirmationStatus
-      isInterestedInAccommodation
-      participants {
-        _id
-        name
-        lastName
-        age
-        celiac
-        vegan
-        vegetarian
-        intolerances
-      }
-    }
-  }
-`);
 
 export default async function AdminDashboardPage() {
   const t = await getTranslations("Admin.dashboard");
 
   let invitations: InvitationDto[] = [];
   try {
-    const client = await getClient();
-    const { data } = await client.query<Query>({
-      query: GET_ALL_INVITATIONS,
-    });
-    invitations = (data?.invitations as InvitationDto[]) || [];
+    const user = await authService.getAuthenticatedUser();
+    invitations = await invitationsService.findAll(user);
   } catch (e) {
     console.error("Failed to load invitations", e);
   }

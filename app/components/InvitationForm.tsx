@@ -9,7 +9,7 @@ import {
   ConfirmationStatus,
   InvitationDto,
   ParticipantDto,
-} from "@/lib/graphql/graphql";
+} from "@/lib/models/invitation";
 import { logger } from "@/lib/logger";
 import { urlFor } from "@/lib/sanity/sanity";
 import { ParticipantPageData } from "@/lib/sanity/types";

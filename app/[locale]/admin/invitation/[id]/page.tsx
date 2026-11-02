@@ -3,36 +3,13 @@ import { TokenRefresher } from "@/app/components/TokenRefresher";
 import { Link, redirect } from "@/app/i18n";
 import styles from "./page.module.css";
 import { ArrowLeft } from "lucide-react";
-import { getClient } from "@/lib/api/graphql-client";
-import { gql } from "@/lib/graphql";
-import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
+import { InvitationDto } from "@/lib/models/invitation";
 import { logger } from "@/lib/logger";
 import { client } from "@/lib/sanity/sanity";
 import { ParticipantPageData } from "@/lib/sanity/types";
+import { authService } from "@/lib/server/services/auth.service";
+import { invitationsService } from "@/lib/server/services/invitations.service";
 import { getTranslations } from "next-intl/server";
-
-const GET_INVITATION = gql(`
-  query GetInvitation($id: ID!) {
-    invitation(id: $id) {
-      _id
-      recipient
-      confirmationStatus
-      phoneNumber
-      email
-      isInterestedInAccommodation
-      participants {
-        _id
-        name
-        lastName
-        age
-        celiac
-        vegetarian
-        vegan
-        intolerances
-      }
-    }
-  }
-`);
 
 async function getParticipantPageData() {
   return client.fetch<ParticipantPageData>(`
@@ -62,13 +39,8 @@ export default async function AdminInvitationEdit({
   let errorMsg = null;
 
   try {
-    const client = await getClient();
-
-    const { data } = await client.query<GetInvitationQuery>({
-      query: GET_INVITATION,
-      variables: { id },
-    });
-    invitationData = data?.invitation as InvitationDto;
+    const user = await authService.getAuthenticatedUser();
+    invitationData = await invitationsService.findOne(id, user);
   } catch (e) {
     logger.error("Error fetching invitation:", e);
     errorMsg = t("errorLoading");
