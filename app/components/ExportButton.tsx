@@ -1,6 +1,6 @@
 "use client";
 
-import { InvitationDto } from "@/lib/graphql/graphql";
+import { InvitationDto } from "@/lib/models/invitation";
 import { useState } from "react";
 import styles from "./ExportButton.module.css";
 import { useTranslations } from "next-intl";

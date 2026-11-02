@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "@/app/i18n";
 import { useTranslations, useLocale } from "next-intl";
-import { ConfirmationStatus, InvitationDto } from "@/lib/graphql/graphql";
+import { ConfirmationStatus, InvitationDto } from "@/lib/models/invitation";
 import { ExportButton } from "./ExportButton";
 import { SuccessModal } from "./SuccessModal";
 import pageStyles from "../[locale]/admin/page.module.css";

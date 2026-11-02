@@ -2,38 +2,15 @@ import Footer from "@/app/components/Footer";
 import { InvitationForm } from "@/app/components/InvitationForm";
 import { TokenRefresher } from "@/app/components/TokenRefresher";
 import { Link, redirect } from "@/app/i18n";
-import { getClient } from "@/lib/api/graphql-client";
-import { gql } from "@/lib/graphql";
-import { GetInvitationQuery, InvitationDto } from "@/lib/graphql/graphql";
+import { InvitationDto } from "@/lib/models/invitation";
 import { logger } from "@/lib/logger";
 import { client } from "@/lib/sanity/sanity";
 import { ParticipantPageData } from "@/lib/sanity/types";
+import { authService } from "@/lib/server/services/auth.service";
+import { invitationsService } from "@/lib/server/services/invitations.service";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import styles from "./page.module.css";
-
-const GET_INVITATION = gql(`
-  query GetInvitation($id: ID!) {
-    invitation(id: $id) {
-      _id
-      recipient
-      confirmationStatus
-      phoneNumber
-      email
-      isInterestedInAccommodation
-      participants {
-        _id
-        name
-        lastName
-        age
-        celiac
-        vegetarian
-        vegan
-        intolerances
-      }
-    }
-  }
-`);
 
 async function getParticipantPageData() {
   return client.fetch<ParticipantPageData>(`
@@ -61,14 +38,8 @@ export default async function ParticipantDetail({
   let authError = null;
 
   try {
-    const client = await getClient();
-
-    // Cast the result to the generated query type if inference fails with dynamic client
-    const { data } = await client.query<GetInvitationQuery>({
-      query: GET_INVITATION,
-      variables: { id: participantId },
-    });
-    invitationData = data?.invitation as InvitationDto;
+    const user = await authService.getAuthenticatedUser();
+    invitationData = await invitationsService.findOne(participantId, user);
   } catch (e) {
     logger.error("Error fetching invitation:", e);
     authError = "Error loading invitation. Please try logging in again.";
