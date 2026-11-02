@@ -286,6 +286,9 @@ The application will be available at [http://localhost:3000](http://localhost:30
 | `pnpm build` | Builds the application for production. |
 | `pnpm start` | Starts the production server locally. |
 | `pnpm lint` | Runs ESLint across the project. |
+| `pnpm test` | Runs Vitest unit, integration, and UI component tests. |
+| `pnpm test:cov` | Runs Vitest with V8 coverage reporting. |
+| `pnpm test:e2e` | Runs Playwright end-to-end tests. |
 
 ---
 
