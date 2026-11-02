@@ -1,7 +1,9 @@
 import path from "path";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./"),
@@ -18,6 +20,7 @@ export default defineConfig({
         "lib/**/*.ts",
         "app/api/**/*.ts",
         "app/actions/**/*.ts",
+        "app/components/**/*.tsx",
         "proxy.ts",
       ],
     },

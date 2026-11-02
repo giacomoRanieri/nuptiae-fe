@@ -18,10 +18,8 @@ import { useTranslations } from "next-intl";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import {
-  startTransition,
   useTransition,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import styles from "./InvitationForm.module.css";
@@ -53,20 +51,6 @@ export function InvitationForm({ invitation, pageData }: Props) {
   const [state, setState] = useState<InvitationFormState>(initialState);
   const [isPending, startTransitionHook] = useTransition();
 
-  const formAction = (formData: FormData) => {
-    startTransitionHook(async () => {
-      try {
-        const result = await updateInvitationAction(state, formData);
-        setState(result);
-      } catch (err) {
-        setState({
-          success: false,
-          message: "update.failed",
-          timestamp: Date.now(),
-        });
-      }
-    });
-  };
   const [status, setStatus] = useState<ConfirmationStatus>(
     (invitation.confirmationStatus as ConfirmationStatus) ||
       ConfirmationStatus.Pending,
@@ -81,43 +65,45 @@ export function InvitationForm({ invitation, pageData }: Props) {
 
   const [isVisible, setIsVisible] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const lastProcessedTimestampRef = useRef<number | undefined>(undefined);
+  const [prevInvitation, setPrevInvitation] = useState(invitation);
 
-  // Sync local state with server data after revalidation
-  useEffect(() => {
+  if (invitation !== prevInvitation) {
+    setPrevInvitation(invitation);
     if (invitation) {
-      if (invitation.participants && invitation.participants.length > 0) {
-        setParticipants(invitation.participants);
-      } else {
-        setParticipants([emptyParticipant]);
-      }
+      setParticipants(
+        invitation.participants && invitation.participants.length > 0
+          ? invitation.participants
+          : [emptyParticipant]
+      );
       if (invitation.confirmationStatus) {
         setStatus(invitation.confirmationStatus as ConfirmationStatus);
       }
     }
-  }, [invitation]);
+  }
 
-  useEffect(() => {
-    // Only trigger if we have a new timestamp that we haven't processed yet
-    if (
-      state.timestamp &&
-      state.timestamp !== lastProcessedTimestampRef.current
-    ) {
-      lastProcessedTimestampRef.current = state.timestamp;
-
-      if (state.message) {
-        // Only show inline message if it's an error OR if it's success but NOT confirmed status
-        if (!state.success || status !== ConfirmationStatus.Confirmed) {
-          setIsVisible(true);
+  const formAction = (formData: FormData) => {
+    startTransitionHook(async () => {
+      try {
+        const result = await updateInvitationAction(state, formData);
+        setState(result);
+        if (result.message) {
+          if (!result.success || status !== ConfirmationStatus.Confirmed) {
+            setIsVisible(true);
+          }
+          if (result.success && status === ConfirmationStatus.Confirmed) {
+            setShowSuccessModal(true);
+          }
         }
-
-        // Show modal if success AND status is confirmed
-        if (state.success && status === ConfirmationStatus.Confirmed) {
-          setShowSuccessModal(true);
-        }
+      } catch {
+        setState({
+          success: false,
+          message: "update.failed",
+          timestamp: Date.now(),
+        });
+        setIsVisible(true);
       }
-    }
-  }, [state, status]);
+    });
+  };
   useEffect(() => {
     if (isVisible && state.success) {
       const timer = setTimeout(() => {
