@@ -1,7 +1,10 @@
-import { authClient } from "@/lib/api/auth-client";
 import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { parseSetCookie, serialize } from "cookie";
+import {
+  authService,
+  getAccessTokenCookieOptions,
+} from "@/lib/server/services/auth.service";
+import { AppError } from "@/lib/server/services/invitations.service";
 
 export async function POST(request: Request) {
   try {
@@ -14,45 +17,25 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await authClient.adminLogin(username, password);
+    const { access_token } = await authService.adminSignIn(username, password);
 
-    if (response.ok) {
-      const setCookie = response.headers.getSetCookie();
-      const atCookie = setCookie.find((cookie) => cookie.startsWith("at="));
+    const nextResponse = NextResponse.json({
+      success: true,
+      message: "Login successful",
+    });
+    nextResponse.cookies.set({
+      ...getAccessTokenCookieOptions(),
+      value: access_token,
+    });
 
-      if (!atCookie) {
-        return NextResponse.json({ success: false }, { status: 500 });
-      }
-
-      const parsedCookie = parseSetCookie(atCookie);
-
-      const nextResponse = NextResponse.json({ success: true });
-      let finalCookie = atCookie;
-      if (process.env.NODE_ENV === "production") {
-        parsedCookie.sameSite = "lax";
-        parsedCookie.domain = ".giacomoloredana.it";
-        //finalCookie = finalCookie.replace(/SameSite=Strict/i, "SameSite=Lax");
-        //if (!finalCookie.includes("Domain=")) {
-        //  finalCookie += "; Domain=.giacomoloredana.it";
-        //}
-      } else {
-        parsedCookie.domain = "localhost";
-        parsedCookie.secure = false;
-        parsedCookie.sameSite = undefined;
-        parsedCookie.path = "/";
-        finalCookie = serialize(parsedCookie);
-        //finalCookie = finalCookie.split(";")[0] + "; Path=/";
-      }
-      nextResponse.headers.set("Set-Cookie", finalCookie);
-
-      return nextResponse;
-    } else {
+    return nextResponse;
+  } catch (error) {
+    if (error instanceof AppError && error.statusCode === 401) {
       return NextResponse.json(
         { message: "Invalid credentials" },
-        { status: response.status }
+        { status: 401 }
       );
     }
-  } catch (error) {
     logger.error("Admin login failed", error);
     return NextResponse.json(
       { message: "Internal server error" },
