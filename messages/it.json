@@ -104,7 +104,16 @@
       "no": "No",
       "linkCopied": "Link copiato negli appunti!",
       "linkCopiedTitle": "Link copiato",
-      "close": "Chiudi"
+      "close": "Chiudi",
+      "shareLink": "Condividi link",
+      "createInvitation": "Nuovo invito",
+      "createInvitationTitle": "Crea nuovo invito",
+      "recipientLabel": "Destinatario invito",
+      "recipientPlaceholder": "Es. Famiglia Rossi",
+      "createConfirm": "Crea invito",
+      "creating": "Creazione...",
+      "cancel": "Annulla",
+      "createError": "Errore durante la creazione dell'invito"
     },
     "invitationDetail": {
       "goBack": "Torna alla Dashboard",
